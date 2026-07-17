@@ -82,6 +82,9 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1520; color: 
 /* ── RIGHT PANEL ── */
 #right-panel { width: 230px; background: #111d33; border-left: 1px solid #1e2e4a; display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden; }
 #sel-header { padding: 7px 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #567; border-bottom: 1px solid #1e2e4a; background: #0d1520; flex-shrink: 0; }
+#sel-area-header { padding: 6px 10px; font-size: 11px; font-weight: 700; color: #7ecfff; background: #0a1520; border-bottom: 1px solid #1e2e4a; flex-shrink: 0; display: flex; justify-content: space-between; align-items: baseline; }
+#sel-area-header .sah-frac { color: #fff; }
+#sel-area-header .sah-lab { font-size: 8px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.8px; color: #3a6a8a; }
 #selected-list { flex: 1; overflow-y: auto; padding: 4px 6px; min-height: 0; }
 .sel-empty { color: #334; font-size: 10px; padding: 10px; text-align: center; line-height: 1.6; }
 .sel-item { display: flex; align-items: center; padding: 4px 5px; border-radius: 4px; cursor: pointer; gap: 5px; border: 1px solid transparent; transition: background 0.12s; margin-bottom: 1px; }
@@ -250,6 +253,7 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1520; color: 
   <!-- Seleccionados + Budget -->
   <div id="right-panel">
     <div id="sel-header">En el plano</div>
+    <div id="sel-area-header"><span class="sah-frac" id="sah-frac">0.0 / 90.0 m²</span><span class="sah-lab">ocupado / total</span></div>
     <div id="selected-list"><div class="sel-empty">Cargá una opción o agregá<br>equipamiento del catálogo</div></div>
     <div id="item-ctrl">
       <button class="btn btn-rot" id="side-rotate" onclick="rotateSelected()" disabled style="flex:1">↻ Rotar</button>
@@ -681,7 +685,7 @@ function updateUI(){
   var si=document.getElementById('sel-info');if(selectedUid){var it=getItem(selectedUid),e=it?getEq(it.eqId):null;si.textContent=e&&!e.nonPhys?e.name+'  '+itemW(it)+'x'+itemH(it)+'m':'';} else si.textContent='';
 }
 function updateBudget(){var t=getTotalUSD(),rate=Math.max(1,parseFloat(document.getElementById('exch').value)||1450);document.getElementById('total-usd').textContent='USD $'+fmt(t);document.getElementById('total-ars').textContent='ARS $'+fmt(t*rate);updateAreaStat();}
-function updateAreaStat(){var used=getUsedArea(),total=ROOM_W*ROOM_H;document.getElementById('used-area').textContent=used.toFixed(1);document.getElementById('free-area').textContent=Math.max(0,total-used).toFixed(1);document.getElementById('stat-total').textContent=total.toFixed(1);}
+function updateAreaStat(){var used=getUsedArea(),total=ROOM_W*ROOM_H;document.getElementById('used-area').textContent=used.toFixed(1);document.getElementById('free-area').textContent=Math.max(0,total-used).toFixed(1);document.getElementById('stat-total').textContent=total.toFixed(1);var sah=document.getElementById('sah-frac');if(sah)sah.textContent=used.toFixed(1)+' / '+total.toFixed(1)+' m²';}
 
 // ══════════════════════════════════════════════════
 //  MODAL
