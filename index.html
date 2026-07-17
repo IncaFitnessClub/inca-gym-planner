@@ -19,6 +19,18 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1520; color: 
 .room-dims input { background: #182840; border: 1px solid #2a4a6a; color: #aac; padding: 2px 5px; border-radius: 3px; width: 46px; font-size: 11px; text-align: center; }
 .room-dims input:focus { outline: none; border-color: #4a8abf; }
 
+/* ── TABS BAR ── */
+#tabs-bar { background: #0d1725; padding: 5px 14px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid #1a2740; flex-shrink: 0; overflow-x: auto; }
+.tab-item { display: flex; align-items: center; gap: 6px; background: #142238; border: 1px solid #22385a; border-radius: 5px 5px 0 0; padding: 5px 10px; font-size: 11px; color: #789; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: background 0.12s; }
+.tab-item:hover { background: #1a3050; color: #bcd; }
+.tab-item.active { background: #EB5B25; color: #fff; border-color: #EB5B25; font-weight: 700; }
+.tab-item .tab-x { background: none; border: none; color: inherit; opacity: 0.6; cursor: pointer; font-size: 12px; padding: 0 2px; line-height: 1; }
+.tab-item .tab-x:hover { opacity: 1; color: #fff; }
+.tab-add { background: none; border: 1px dashed #2a4a6a; color: #567; border-radius: 5px; padding: 5px 10px; font-size: 13px; cursor: pointer; flex-shrink: 0; }
+.tab-add:hover { background: #142238; color: #9bd; border-color: #4a8abf; }
+#save-indicator { font-size: 9px; color: #2a5a3a; margin-left: 8px; white-space: nowrap; flex-shrink: 0; opacity: 0; transition: opacity 0.3s; }
+#save-indicator.show { opacity: 1; }
+
 /* ── BUTTONS ── */
 .btn { padding: 5px 12px; border: none; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 600; transition: background 0.15s; white-space: nowrap; }
 .btn:disabled { opacity: 0.3; cursor: default; }
@@ -77,6 +89,7 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1520; color: 
 .sel-item.active { background: #182840; border-color: #3a6a9a; }
 .sel-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .sel-name { flex: 1; font-size: 10.5px; color: #ccc; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sel-area { font-size: 9px; color: #7ecfff; white-space: nowrap; }
 .sel-p { font-size: 9px; color: #4a8; white-space: nowrap; }
 .sel-x { background: none; border: none; color: #445; cursor: pointer; font-size: 13px; padding: 0 1px; line-height: 1; flex-shrink: 0; }
 .sel-x:hover { color: #e74c3c; }
@@ -209,6 +222,9 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1520; color: 
   <button class="btn btn-iso" id="btn-iso" onclick="toggleView()">◈ Vista 3D</button>
 </div>
 
+<!-- ══ TABS DE PROYECTOS/SEDES ══ -->
+<div id="tabs-bar"></div>
+
 <!-- ══ MAIN ══ -->
 <div id="main">
 
@@ -244,7 +260,7 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1520; color: 
       <div class="b-row"><span class="b-label">Total ARS</span><span class="b-val b-ars" id="total-ars">ARS $0</span></div>
       <div class="exch-row">
         <label>TC $</label>
-        <input type="number" id="exch" value="1450" min="1" onchange="updateBudget()">
+        <input type="number" id="exch" value="1450" min="1" onchange="updateBudget();persistState()">
         <span style="font-size:9px;color:#446">ARS/USD</span>
       </div>
       <div id="sel-info"></div>
@@ -314,32 +330,35 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1520; color: 
 // ══════════════════════════════════════════════════
 //  DATABASE
 // ══════════════════════════════════════════════════
-var EQ = [
-  { id:'rack_basico',   name:'Rack Mancuernas 2.5-30kg', w:2.0, h:0.8,  price:1500, color:'#3a8fdf', cat:'Pesas' },
-  { id:'rack_ext50',    name:'Extension Rack 30-50kg',   w:2.0, h:0.8,  price:1500, color:'#2a6fba', cat:'Pesas' },
-  { id:'rack_ext70',    name:'Extension Rack 50-70kg',   w:1.0, h:0.8,  price:3000, color:'#1a5090', cat:'Pesas' },
-  { id:'barras_discos', name:'Rack Barras + Discos',      w:1.0, h:0.5,  price:800,  color:'#6c757d', cat:'Pesas' },
-  { id:'smith',         name:'Smith Machine',            w:2.5, h:1.5,  price:1800, color:'#e8a838', cat:'Maquinas' },
-  { id:'smith_premium', name:'Smith Machine Premium',    w:2.5, h:1.5,  price:4800, color:'#c47820', cat:'Maquinas' },
-  { id:'prensa',        name:'Prensa de Piernas 45',     w:2.0, h:2.0,  price:3000, color:'#e84444', cat:'Maquinas' },
-  { id:'ext_curl',      name:'Extension/Curl Combinada', w:1.5, h:1.5,  price:2000, color:'#9b59b6', cat:'Maquinas' },
-  { id:'pec_deck',      name:'Pec Deck / Mariposa',      w:1.5, h:1.5,  price:1500, color:'#e67e22', cat:'Maquinas' },
-  { id:'hip_thrust',    name:'Hip Thrust Bench',         w:1.5, h:1.2,  price:1200, color:'#16a085', cat:'Maquinas' },
-  { id:'hack_squat',    name:'Hack Squat / V-Squat',     w:2.0, h:2.0,  price:4000, color:'#c0392b', cat:'Maquinas' },
-  { id:'cable_cross',   name:'Cable Crossover Premium',  w:2.0, h:2.5,  price:5000, color:'#2471a3', cat:'Maquinas' },
-  { id:'gluteos',       name:'Maquina de Gluteos',       w:1.5, h:1.5,  price:3500, color:'#d81b7a', cat:'Maquinas' },
-  { id:'remo_guiado',   name:'Remo Guiado / Seated Row', w:1.5, h:1.5,  price:2500, color:'#148a70', cat:'Maquinas' },
-  { id:'curl_fem',      name:'Curl Femoral Sentado',     w:1.5, h:1.2,  price:2000, color:'#7d3c98', cat:'Maquinas' },
-  { id:'polea',         name:'Polea Funcional',          w:1.5, h:1.8,  price:1200, color:'#27ae60', cat:'Poleas' },
-  { id:'banco_reg',     name:'Banco Regulable',          w:1.5, h:0.6,  price:200,  color:'#85929e', cat:'Bancos' },
-  { id:'banco_plano',   name:'Banco Plano',              w:1.5, h:0.6,  price:180,  color:'#717d8a', cat:'Bancos' },
-  { id:'scott',         name:'Banco Scott',              w:1.2, h:0.8,  price:300,  color:'#5d6d7e', cat:'Bancos' },
-  { id:'espejo_2',      name:'Espejos 2 tramos (3m)',    w:3.0, h:0.12, price:1800, color:'#aabbcc', cat:'Instalaciones' },
-  { id:'espejo_3',      name:'Espejos 3 paredes full',   w:4.0, h:0.12, price:3500, color:'#ccdde8', cat:'Instalaciones' },
-  { id:'tv',            name:'TV 55"',                   w:1.4, h:0.12, price:500,  color:'#2c3e50', cat:'Instalaciones' },
-  { id:'senaletica',    name:'Senaletica / Branding',    w:2.0, h:0.12, price:1000, color:'#e74c3c', cat:'Instalaciones' },
-  { id:'iluminacion',   name:'Iluminacion LED (obra)',   w:0,   h:0,    price:600,  color:'#f1c40f', cat:'Instalaciones', nonPhys:true },
-];
+function defaultEQ(){
+  return [
+    { id:'rack_basico',   name:'Rack Mancuernas 2.5-30kg', w:2.0, h:0.8,  price:1500, color:'#3a8fdf', cat:'Pesas' },
+    { id:'rack_ext50',    name:'Extension Rack 30-50kg',   w:2.0, h:0.8,  price:1500, color:'#2a6fba', cat:'Pesas' },
+    { id:'rack_ext70',    name:'Extension Rack 50-70kg',   w:1.0, h:0.8,  price:3000, color:'#1a5090', cat:'Pesas' },
+    { id:'barras_discos', name:'Rack Barras + Discos',      w:1.0, h:0.5,  price:800,  color:'#6c757d', cat:'Pesas' },
+    { id:'smith',         name:'Smith Machine',            w:2.5, h:1.5,  price:1800, color:'#e8a838', cat:'Maquinas' },
+    { id:'smith_premium', name:'Smith Machine Premium',    w:2.5, h:1.5,  price:4800, color:'#c47820', cat:'Maquinas' },
+    { id:'prensa',        name:'Prensa de Piernas 45',     w:2.0, h:2.0,  price:3000, color:'#e84444', cat:'Maquinas' },
+    { id:'ext_curl',      name:'Extension/Curl Combinada', w:1.5, h:1.5,  price:2000, color:'#9b59b6', cat:'Maquinas' },
+    { id:'pec_deck',      name:'Pec Deck / Mariposa',      w:1.5, h:1.5,  price:1500, color:'#e67e22', cat:'Maquinas' },
+    { id:'hip_thrust',    name:'Hip Thrust Bench',         w:1.5, h:1.2,  price:1200, color:'#16a085', cat:'Maquinas' },
+    { id:'hack_squat',    name:'Hack Squat / V-Squat',     w:2.0, h:2.0,  price:4000, color:'#c0392b', cat:'Maquinas' },
+    { id:'cable_cross',   name:'Cable Crossover Premium',  w:2.0, h:2.5,  price:5000, color:'#2471a3', cat:'Maquinas' },
+    { id:'gluteos',       name:'Maquina de Gluteos',       w:1.5, h:1.5,  price:3500, color:'#d81b7a', cat:'Maquinas' },
+    { id:'remo_guiado',   name:'Remo Guiado / Seated Row', w:1.5, h:1.5,  price:2500, color:'#148a70', cat:'Maquinas' },
+    { id:'curl_fem',      name:'Curl Femoral Sentado',     w:1.5, h:1.2,  price:2000, color:'#7d3c98', cat:'Maquinas' },
+    { id:'polea',         name:'Polea Funcional',          w:1.5, h:1.8,  price:1200, color:'#27ae60', cat:'Poleas' },
+    { id:'banco_reg',     name:'Banco Regulable',          w:1.5, h:0.6,  price:200,  color:'#85929e', cat:'Bancos' },
+    { id:'banco_plano',   name:'Banco Plano',              w:1.5, h:0.6,  price:180,  color:'#717d8a', cat:'Bancos' },
+    { id:'scott',         name:'Banco Scott',              w:1.2, h:0.8,  price:300,  color:'#5d6d7e', cat:'Bancos' },
+    { id:'espejo_2',      name:'Espejos 2 tramos (3m)',    w:3.0, h:0.12, price:1800, color:'#aabbcc', cat:'Instalaciones' },
+    { id:'espejo_3',      name:'Espejos 3 paredes full',   w:4.0, h:0.12, price:3500, color:'#ccdde8', cat:'Instalaciones' },
+    { id:'tv',            name:'TV 55"',                   w:1.4, h:0.12, price:500,  color:'#2c3e50', cat:'Instalaciones' },
+    { id:'senaletica',    name:'Senaletica / Branding',    w:2.0, h:0.12, price:1000, color:'#e74c3c', cat:'Instalaciones' },
+    { id:'iluminacion',   name:'Iluminacion LED (obra)',   w:0,   h:0,    price:600,  color:'#f1c40f', cat:'Instalaciones', nonPhys:true },
+  ];
+}
+var EQ = defaultEQ();
 
 var PRESETS = {
   intermedia: ['rack_basico','rack_ext50','barras_discos','smith','banco_reg','banco_reg','banco_plano','polea','scott','prensa','ext_curl','pec_deck','hip_thrust','espejo_2','tv','iluminacion'],
@@ -355,6 +374,158 @@ var canvas=document.getElementById('floor-canvas'), ctx=canvas.getContext('2d');
 
 function initCanvas(){ canvas.width=ROOM_W*SCALE+MARGIN*2; canvas.height=ROOM_H*SCALE+MARGIN*2; }
 initCanvas();
+
+// ══════════════════════════════════════════════════
+//  PROYECTOS / PERSISTENCIA (localStorage)
+// ══════════════════════════════════════════════════
+var STORAGE_KEY='inca_gym_planner_v1';
+var PROJECTS={}, activeProjectId=null, projectCounter=1;
+var CUOTA=25000, FILL=70;
+
+function newProject(name){
+  return { name:name, roomW:10, roomH:9, placed:[], nextUid:1, eq:defaultEQ(), exch:1450, cuota:25000, fill:70 };
+}
+
+function saveToStorage(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ projects:PROJECTS, active:activeProjectId, counter:projectCounter }));
+    flashSaveIndicator();
+  }catch(err){ console.error('No se pudo guardar en localStorage', err); }
+}
+
+function loadFromStorage(){
+  try{
+    var raw=localStorage.getItem(STORAGE_KEY);
+    if(!raw) return false;
+    var data=JSON.parse(raw);
+    if(!data||!data.projects||!Object.keys(data.projects).length) return false;
+    PROJECTS=data.projects;
+    activeProjectId=data.active&&PROJECTS[data.active]?data.active:Object.keys(PROJECTS)[0];
+    projectCounter=data.counter||Object.keys(PROJECTS).length;
+    return true;
+  }catch(err){ console.error('No se pudo leer localStorage', err); return false; }
+}
+
+// Vuelca el estado en memoria (vars de trabajo) hacia el proyecto activo y persiste
+function persistState(){
+  if(!activeProjectId||!PROJECTS[activeProjectId]) return;
+  var p=PROJECTS[activeProjectId];
+  p.roomW=ROOM_W; p.roomH=ROOM_H;
+  p.placed=placed; p.nextUid=nextUid; p.eq=EQ;
+  var exchEl=document.getElementById('exch');
+  p.exch=exchEl?(parseFloat(exchEl.value)||p.exch):p.exch;
+  p.cuota=CUOTA; p.fill=FILL;
+  saveToStorage();
+}
+
+// Carga el proyecto activo hacia las vars de trabajo
+function loadActiveIntoVars(){
+  var p=PROJECTS[activeProjectId];
+  ROOM_W=p.roomW||10; ROOM_H=p.roomH||9;
+  placed=p.placed||[]; nextUid=p.nextUid||1;
+  EQ=p.eq||defaultEQ();
+  CUOTA=p.cuota||25000; FILL=p.fill||70;
+  document.getElementById('room-w').value=ROOM_W;
+  document.getElementById('room-h').value=ROOM_H;
+  document.getElementById('exch').value=p.exch||1450;
+}
+
+function switchProject(id){
+  if(id===activeProjectId) return;
+  persistState();
+  activeProjectId=id;
+  selectedUid=null; drag=null; viewMode='top';
+  document.getElementById('btn-iso').textContent='◈ Vista 3D';
+  loadActiveIntoVars();
+  initCanvas();
+  buildCatalog();
+  updateUI();
+  render();
+  runConsult();
+  renderTabs();
+  saveToStorage();
+}
+
+function addProject(){
+  projectCounter++;
+  var name=prompt('Nombre del nuevo proyecto/sede:','Sede '+projectCounter);
+  if(name===null){ projectCounter--; return; }
+  name=name.trim()||('Sede '+projectCounter);
+  var id='proj_'+Date.now();
+  persistState();
+  PROJECTS[id]=newProject(name);
+  activeProjectId=id;
+  selectedUid=null; drag=null; viewMode='top';
+  document.getElementById('btn-iso').textContent='◈ Vista 3D';
+  loadActiveIntoVars();
+  initCanvas();
+  buildCatalog();
+  updateUI();
+  render();
+  runConsult();
+  renderTabs();
+  saveToStorage();
+}
+
+function renameProject(id,ev){
+  if(ev)ev.stopPropagation();
+  var p=PROJECTS[id];
+  if(!p)return;
+  var name=prompt('Nuevo nombre para "'+p.name+'":',p.name);
+  if(name===null)return;
+  name=name.trim();
+  if(!name)return;
+  p.name=name;
+  renderTabs();
+  saveToStorage();
+}
+
+function deleteProject(id,ev){
+  if(ev)ev.stopPropagation();
+  var keys=Object.keys(PROJECTS);
+  if(keys.length<=1){ alert('No podés eliminar el único proyecto. Creá otro antes de borrar este.'); return; }
+  var p=PROJECTS[id];
+  if(!confirm('Eliminar el proyecto "'+p.name+'"? Esta acción no se puede deshacer.'))return;
+  delete PROJECTS[id];
+  if(id===activeProjectId){
+    activeProjectId=Object.keys(PROJECTS)[0];
+    selectedUid=null; drag=null; viewMode='top';
+    document.getElementById('btn-iso').textContent='◈ Vista 3D';
+    loadActiveIntoVars();
+    initCanvas();
+    buildCatalog();
+    updateUI();
+    render();
+    runConsult();
+  }
+  renderTabs();
+  saveToStorage();
+}
+
+function renderTabs(){
+  var bar=document.getElementById('tabs-bar');
+  var html='';
+  Object.keys(PROJECTS).forEach(function(id){
+    var p=PROJECTS[id];
+    var active=id===activeProjectId?' active':'';
+    html+='<div class="tab-item'+active+'" onclick="switchProject(\''+id+'\')" ondblclick="renameProject(\''+id+'\',event)" title="Doble clic para renombrar">'+
+      '<span>'+p.name+'</span>'+
+      '<button class="tab-x" onclick="deleteProject(\''+id+'\',event)" title="Eliminar proyecto">✕</button>'+
+    '</div>';
+  });
+  html+='<button class="tab-add" onclick="addProject()" title="Nuevo proyecto/sede">+ Proyecto</button>';
+  html+='<span id="save-indicator">✓ Guardado</span>';
+  bar.innerHTML=html;
+}
+
+var _flashTimer=null;
+function flashSaveIndicator(){
+  var el=document.getElementById('save-indicator');
+  if(!el)return;
+  el.classList.add('show');
+  clearTimeout(_flashTimer);
+  _flashTimer=setTimeout(function(){el.classList.remove('show');},900);
+}
 
 // ══════════════════════════════════════════════════
 //  HELPERS
@@ -449,8 +620,8 @@ function c2r(cx,cy){return{rx:(cx-MARGIN)/SCALE,ry:(cy-MARGIN)/SCALE};}
 function hitTest(it,rx,ry){var e=getEq(it.eqId);if(!e||e.nonPhys)return false;var iw=itemW(it),ih=itemH(it);return rx>=it.x&&rx<=it.x+iw&&ry>=it.y&&ry<=it.y+ih;}
 canvas.addEventListener('mousedown',function(e){if(viewMode==='iso')return;var xy=getXY(e),rp=c2r(xy.cx,xy.cy),found=null;for(var i=placed.length-1;i>=0;i--){if(hitTest(placed[i],rp.rx,rp.ry)){found=placed[i];break;}}if(found){selectedUid=found.uid;drag={uid:found.uid,offX:rp.rx-found.x,offY:rp.ry-found.y};canvas.style.cursor='grabbing';}else selectedUid=null;updateUI();render();});
 canvas.addEventListener('mousemove',function(e){var xy=getXY(e),rp=c2r(xy.cx,xy.cy);if(drag){var it=getItem(drag.uid);if(!it)return;var iw=itemW(it),ih=itemH(it);it.x=clamp(snapV(rp.rx-drag.offX),0,ROOM_W-iw);it.y=clamp(snapV(rp.ry-drag.offY),0,ROOM_H-ih);updateAreaStat();render();return;}if(viewMode!=='iso'){var h=false;for(var i=0;i<placed.length;i++){if(hitTest(placed[i],rp.rx,rp.ry)){h=true;break;}}canvas.style.cursor=h?'grab':'default';}});
-canvas.addEventListener('mouseup',function(){drag=null;if(canvas.style.cursor==='grabbing')canvas.style.cursor='default';});
-canvas.addEventListener('mouseleave',function(){drag=null;});
+canvas.addEventListener('mouseup',function(){if(drag)persistState();drag=null;if(canvas.style.cursor==='grabbing')canvas.style.cursor='default';});
+canvas.addEventListener('mouseleave',function(){if(drag)persistState();drag=null;});
 document.addEventListener('keydown',function(e){if(['INPUT','TEXTAREA','SELECT'].indexOf(e.target.tagName)>=0)return;if(e.key==='r'||e.key==='R')rotateSelected();if(e.key==='Delete'||e.key==='Backspace')deleteSelected();if(e.key==='Escape')closeModal();});
 
 // ══════════════════════════════════════════════════
@@ -458,7 +629,7 @@ document.addEventListener('keydown',function(e){if(['INPUT','TEXTAREA','SELECT']
 // ══════════════════════════════════════════════════
 function addItem(eqId){var e=getEq(eqId);if(!e)return;var x=0.5,y=0.5;if(!e.nonPhys){var iw=e.w,ih=e.h;outer:for(var ty=0;ty+ih<=ROOM_H;ty+=SNAP){for(var tx=0;tx+iw<=ROOM_W;tx+=SNAP){if(!overlapsAny(null,tx,ty,iw,ih)){x=tx;y=ty;break outer;}}}}var it={uid:nextUid++,eqId:eqId,x:x,y:y,rotated:false};placed.push(it);selectedUid=it.uid;updateUI();render();runConsult();}
 function overlapsAny(excl,x,y,w,h){for(var i=0;i<placed.length;i++){var it=placed[i];if(it.uid===excl)continue;var e=getEq(it.eqId);if(!e||e.nonPhys)continue;var iw=itemW(it),ih=itemH(it);if(!(x+w<=it.x||x>=it.x+iw||y+h<=it.y||y>=it.y+ih))return true;}return false;}
-function rotateSelected(){if(!selectedUid)return;var it=getItem(selectedUid);if(!it)return;var e=getEq(it.eqId);if(!e||e.nonPhys)return;it.rotated=!it.rotated;it.x=clamp(it.x,0,ROOM_W-itemW(it));it.y=clamp(it.y,0,ROOM_H-itemH(it));render();}
+function rotateSelected(){if(!selectedUid)return;var it=getItem(selectedUid);if(!it)return;var e=getEq(it.eqId);if(!e||e.nonPhys)return;it.rotated=!it.rotated;it.x=clamp(it.x,0,ROOM_W-itemW(it));it.y=clamp(it.y,0,ROOM_H-itemH(it));render();persistState();}
 function deleteSelected(){if(!selectedUid)return;placed=placed.filter(function(p){return p.uid!==selectedUid;});selectedUid=null;updateUI();render();runConsult();}
 function clearAll(){if(placed.length>0&&!confirm('Limpiar todo el plano?'))return;placed=[];selectedUid=null;nextUid=1;updateUI();render();runConsult();}
 function removeItem(uid){placed=placed.filter(function(p){return p.uid!==uid;});if(selectedUid===uid)selectedUid=null;updateUI();render();runConsult();}
@@ -491,7 +662,20 @@ function buildCatalog(){var cats={};EQ.forEach(function(e){if(!cats[e.cat])cats[
 function updateUI(){
   var selEl=document.getElementById('selected-list');
   if(!placed.length){selEl.innerHTML='<div class="sel-empty">Carga una opcion o agrega<br>equipamiento del catalogo</div>';}
-  else{var html='';placed.forEach(function(it){var e=getEq(it.eqId);if(!e)return;var active=it.uid===selectedUid?'active':'';html+='<div class="sel-item '+active+'" onclick="selectItem('+it.uid+')"><div class="sel-dot" style="background:'+e.color+'"></div><div class="sel-name" title="'+e.name+'">'+e.name+'</div><div class="sel-p">$'+e.price.toLocaleString()+'</div><button class="sel-x" onclick="event.stopPropagation();removeItem('+it.uid+')">x</button></div>';});selEl.innerHTML=html;}
+  else{
+    var html='';
+    var running=0;
+    placed.forEach(function(it){
+      var e=getEq(it.eqId);
+      if(!e)return;
+      var active=it.uid===selectedUid?'active':'';
+      var areaItem=e.nonPhys?0:itemW(it)*itemH(it);
+      running+=areaItem;
+      var areaLabel=e.nonPhys?'—':areaItem.toFixed(2)+'m²';
+      html+='<div class="sel-item '+active+'" onclick="selectItem('+it.uid+')" title="Acumulado hasta aquí: '+running.toFixed(2)+'m²"><div class="sel-dot" style="background:'+e.color+'"></div><div class="sel-name" title="'+e.name+'">'+e.name+'</div><div class="sel-area">'+areaLabel+'</div><div class="sel-p">$'+e.price.toLocaleString()+'</div><button class="sel-x" onclick="event.stopPropagation();removeItem('+it.uid+')">x</button></div>';
+    });
+    selEl.innerHTML=html;
+  }
   updateBudget();
   var has=!!selectedUid;['hdr-rotate','hdr-delete','side-rotate','side-delete'].forEach(function(id){document.getElementById(id).disabled=!has;});
   var si=document.getElementById('sel-info');if(selectedUid){var it=getItem(selectedUid),e=it?getEq(it.eqId):null;si.textContent=e&&!e.nonPhys?e.name+'  '+itemW(it)+'x'+itemH(it)+'m':'';} else si.textContent='';
@@ -509,7 +693,7 @@ function populateCatSelect(sel){var cats={};EQ.forEach(function(e){cats[e.cat]=t
 function toggleNonPhys(){var ch=document.getElementById('f-nonphys').checked;document.getElementById('f-dims-row').style.opacity=ch?'0.3':'1';document.getElementById('f-dims-row').style.pointerEvents=ch?'none':'';}
 function closeModal(){document.getElementById('modal-overlay').style.display='none';}
 function submitModal(){var name=document.getElementById('f-name').value.trim(),catNew=document.getElementById('f-newcat').value.trim(),catSel=document.getElementById('f-cat').value,cat=catNew||catSel,nonPhys=document.getElementById('f-nonphys').checked,w=nonPhys?0:parseFloat(document.getElementById('f-w').value)||0,h=nonPhys?0:parseFloat(document.getElementById('f-h').value)||0,price=parseInt(document.getElementById('f-price').value)||0,color=document.getElementById('f-color').value;if(!name){alert('El nombre es obligatorio.');return;}if(!cat){alert('Elegí o creá una categoría.');return;}if(!nonPhys&&(w<=0||h<=0)){alert('Ingresá dimensiones válidas.');return;}if(_mMode==='add'){EQ.push({id:'custom_'+Date.now(),name:name,w:w,h:h,price:price,color:color,cat:cat,nonPhys:nonPhys||undefined});}else{for(var i=0;i<EQ.length;i++){if(EQ[i].id===_mId){EQ[i].name=name;EQ[i].w=w;EQ[i].h=h;EQ[i].price=price;EQ[i].color=color;EQ[i].cat=cat;EQ[i].nonPhys=nonPhys||undefined;break;}}}closeModal();buildCatalog();updateUI();render();runConsult();}
-function deleteEqFromModal(){if(!_mId)return;if(!confirm('Eliminar este equipamiento del catálogo?'))return;EQ=EQ.filter(function(e){return e.id!==_mId;});placed=placed.filter(function(p){return p.eqId!==_mId;});if(selectedUid){var si=getItem(selectedUid);if(!si)selectedUid=null;}closeModal();buildCatalog();updateUI();render();}
+function deleteEqFromModal(){if(!_mId)return;if(!confirm('Eliminar este equipamiento del catálogo?'))return;EQ=EQ.filter(function(e){return e.id!==_mId;});placed=placed.filter(function(p){return p.eqId!==_mId;});if(selectedUid){var si=getItem(selectedUid);if(!si)selectedUid=null;}closeModal();buildCatalog();updateUI();render();persistState();}
 
 // ══════════════════════════════════════════════════
 //  CONSULTING PANEL
@@ -538,11 +722,12 @@ function runConsult(){
   var totalUSD=getTotalUSD();
   var rate=Math.max(1,parseFloat(document.getElementById('exch').value)||1450);
 
-  // ROI inputs — render them first (persistent in the consult panel)
+  // ROI inputs — leídos de los inputs si existen (usuario los tocó), si no de la variable de proyecto
   var cuotaEl=document.getElementById('cuota-input');
   var fillEl=document.getElementById('fill-rate');
-  var cuota=cuotaEl?parseFloat(cuotaEl.value)||25000:25000;
-  var fill=fillEl?parseFloat(fillEl.value)||70:70;
+  if(cuotaEl) CUOTA=parseFloat(cuotaEl.value)||CUOTA;
+  if(fillEl) FILL=parseFloat(fillEl.value)||FILL;
+  var cuota=CUOTA, fill=FILL;
 
   // Capacity: 1 socio/m² (industry standard for enrollment)
   var capacidad=Math.round(area*1);
@@ -740,6 +925,7 @@ function runConsult(){
     roiSection;
 
   document.getElementById('consult-inner').innerHTML=html;
+  persistState();
 }
 
 function fmtK(n){if(n>=1000000)return'$'+fmt(n/1000000,1)+'M';if(n>=1000)return'$'+fmt(n/1000,0)+'K';return'$'+fmt(n);}
@@ -747,10 +933,20 @@ function fmtK(n){if(n>=1000000)return'$'+fmt(n/1000000,1)+'M';if(n>=1000)return'
 // ══════════════════════════════════════════════════
 //  BOOT
 // ══════════════════════════════════════════════════
+if(!loadFromStorage()){
+  var _firstId='proj_'+Date.now();
+  PROJECTS[_firstId]=newProject('Sede 1');
+  activeProjectId=_firstId;
+  projectCounter=1;
+}
+loadActiveIntoVars();
+initCanvas();
 buildCatalog();
 updateUI();
 render();
 runConsult();
+renderTabs();
+saveToStorage();
 
 // Ocultar scroll hint al hacer scroll
 window.addEventListener('scroll',function(){
