@@ -10,7 +10,7 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1520; color: 
 #planner { height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
 /* ── HEADER ── */
-#header { background: #111d33; padding: 7px 14px; display: flex; align-items: center; gap: 9px; border-bottom: 2px solid #c0392b; flex-shrink: 0; }
+#header { background: #111d33; padding: 7px 14px; display: flex; align-items: center; gap: 9px; border-bottom: 2px solid #c0392b; flex-shrink: 0; flex-wrap: wrap; row-gap: 6px; }
 #header h1 { font-size: 14px; font-weight: 700; color: #fff; white-space: nowrap; }
 #header h1 span { color: #e74c3c; }
 .sep { width: 1px; height: 22px; background: #2a3a5a; flex-shrink: 0; }
@@ -18,6 +18,9 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1520; color: 
 .room-dims { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #567; }
 .room-dims input { background: #182840; border: 1px solid #2a4a6a; color: #aac; padding: 2px 5px; border-radius: 3px; width: 46px; font-size: 11px; text-align: center; }
 .room-dims input:focus { outline: none; border-color: #4a8abf; }
+.room-dims select { background: #182840; border: 1px solid #2a4a6a; color: #aac; padding: 2px 5px; border-radius: 3px; font-size: 11px; }
+.room-dims select:focus { outline: none; border-color: #4a8abf; }
+#l-shape-controls { display: none; align-items: center; gap: 4px; }
 
 /* ── TABS BAR ── */
 #tabs-bar { background: #0d1725; padding: 5px 14px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid #1a2740; flex-shrink: 0; overflow-x: auto; }
@@ -109,71 +112,6 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1520; color: 
 #area-stat { font-size: 9px; color: #335; line-height: 1.5; border-top: 1px solid #1a2a3a; padding-top: 6px; margin-top: 5px; }
 #sel-info { font-size: 10px; color: #3a6; margin-top: 3px; min-height: 14px; }
 
-/* ── CONSULTING PANEL ── */
-#consult-section { background: #080f18; border-top: 3px solid #c0392b; min-height: 100vh; display: flex; flex-direction: column; }
-#consult-header { padding: 18px 28px 14px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; border-bottom: 1px solid #0f1e30; background: #0a1520; }
-.ct-label { font-weight: 700; color: #fff; font-size: 15px; letter-spacing: 0.5px; }
-.ct-sub { color: #3a5a6a; font-size: 11px; }
-.ct-analyze { margin-left: auto; background: #1a3a5a; color: #7ecfff; border: 1px solid #2a5a8a; border-radius: 5px; padding: 5px 16px; font-size: 11px; font-weight: 600; cursor: pointer; }
-.ct-analyze:hover { background: #2a5a8a; }
-
-#consult-body { flex: 1; }
-
-#consult-inner { padding: 22px 28px 40px; max-width: 1200px; }
-
-/* Summary bar */
-.c-sumbar { display: flex; gap: 0; margin-bottom: 12px; border: 1px solid #1e3050; border-radius: 6px; overflow: hidden; }
-.c-sumcell { flex: 1; padding: 7px 10px; background: #0d1825; border-right: 1px solid #1e3050; }
-.c-sumcell:last-child { border-right: none; }
-.c-sum-val { font-size: 14px; font-weight: 700; color: #fff; }
-.c-sum-lab { font-size: 9px; color: #3a5a7a; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 1px; }
-
-/* ROI inputs */
-.c-roi-inputs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; padding: 8px 10px; background: #0a1520; border: 1px solid #1a2e4a; border-radius: 5px; align-items: flex-end; }
-.c-roi-group { display: flex; flex-direction: column; gap: 3px; }
-.c-roi-group label { font-size: 9px; color: #3a6a8a; text-transform: uppercase; letter-spacing: 0.8px; }
-.c-roi-group input { background: #182840; border: 1px solid #2a4a6a; color: #cce; padding: 4px 8px; border-radius: 3px; font-size: 11px; width: 110px; }
-.c-roi-group input:focus { outline: none; border-color: #4a8abf; }
-.c-roi-note { font-size: 9px; color: #2a4a5a; align-self: flex-end; flex: 1; }
-
-/* Stage grid */
-.c-stages-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-.c-stage { }
-.c-stage-hdr { font-size: 12px; font-weight: 700; padding: 8px 12px; border-radius: 5px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-.c-stage-i .c-stage-hdr { background: #091828; color: #7ecfff; border-left: 4px solid #2980b9; }
-.c-stage-p .c-stage-hdr { background: #180a18; color: #ffaacc; border-left: 4px solid #9b59b6; }
-.c-stage-hdr .s-budget { margin-left: auto; font-size: 10px; font-weight: 400; opacity: 0.7; }
-
-/* Recommendation items */
-.c-rec { display: flex; gap: 10px; padding: 9px 10px; border-radius: 5px; margin-bottom: 5px; background: #0a1420; border-left: 3px solid; }
-.c-rec.pri-1 { border-left-color: #e74c3c; }
-.c-rec.pri-2 { border-left-color: #e67e22; }
-.c-rec.pri-3 { border-left-color: #27ae60; }
-.c-rec.pri-4 { border-left-color: #9b59b6; }
-.c-rec-badge { flex-shrink: 0; font-size: 8px; font-weight: 700; padding: 2px 5px; border-radius: 2px; height: fit-content; margin-top: 2px; white-space: nowrap; }
-.badge-1 { background: #4a0a0a; color: #ff8888; }
-.badge-2 { background: #3a2000; color: #ffaa44; }
-.badge-3 { background: #0a2a10; color: #44cc88; }
-.badge-4 { background: #1a0a2a; color: #cc99ff; }
-.c-rec-body { flex: 1; }
-.c-rec-name { font-size: 11.5px; font-weight: 600; color: #ddd; line-height: 1.3; }
-.c-rec-price { font-size: 9.5px; color: #4a8; margin-bottom: 4px; }
-.c-rec-why { font-size: 10.5px; color: #7ab; line-height: 1.5; }
-.c-rec-who { font-size: 9.5px; color: #3a6a7a; margin-top: 3px; }
-
-/* ROI result */
-.c-roi-result { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
-.c-roi-stat { background: #0d1825; border: 1px solid #1e3050; border-radius: 5px; padding: 7px 12px; flex: 1; min-width: 90px; }
-.c-roi-stat-val { font-size: 15px; font-weight: 700; line-height: 1; margin-bottom: 3px; }
-.c-roi-stat-lab { font-size: 9px; color: #3a5a7a; }
-.c-roi-note2 { font-size: 9px; color: #2a4a5a; margin-top: 6px; line-height: 1.5; }
-
-/* General warnings */
-.c-warn-bar { padding: 6px 10px; border-radius: 4px; font-size: 10px; margin-bottom: 8px; }
-.c-warn-bar.warn { background: #1e1200; border-left: 3px solid #f39c12; color: #dba; }
-.c-warn-bar.risk { background: #1a0808; border-left: 3px solid #e74c3c; color: #faa; }
-.c-warn-bar.ok   { background: #081408; border-left: 3px solid #2ecc71; color: #8da; }
-
 /* ── MODAL ── */
 #modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; align-items: center; justify-content: center; }
 #modal-box { background: #111d33; border: 1px solid #2a4a6a; border-radius: 8px; padding: 20px 24px; width: 380px; max-width: 95vw; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
@@ -216,6 +154,22 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1520; color: 
     ×
     <input type="number" id="room-h" value="9"  min="3" max="40" step="0.5" onchange="updateRoom()">
     m
+    <select id="room-shape" onchange="updateRoomShape()" title="Forma de la sala">
+      <option value="rect">Rectangular</option>
+      <option value="l">En L</option>
+    </select>
+    <span id="l-shape-controls">
+      <select id="cut-corner" onchange="updateRoom()" title="Esquina que falta">
+        <option value="tr">falta arr-der</option>
+        <option value="tl">falta arr-izq</option>
+        <option value="br">falta abj-der</option>
+        <option value="bl">falta abj-izq</option>
+      </select>
+      <input type="number" id="cut-w" value="3" min="0.5" step="0.5" onchange="updateRoom()" title="Ancho del recorte">
+      ×
+      <input type="number" id="cut-h" value="3" min="0.5" step="0.5" onchange="updateRoom()" title="Alto del recorte">
+      m
+    </span>
   </div>
   <div class="sep"></div>
   <button class="btn btn-rot" id="hdr-rotate" onclick="rotateSelected()" disabled>↻ Rotar (R)</button>
@@ -275,21 +229,7 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1520; color: 
     </div>
   </div>
 </div>
-
-<div id="scroll-hint" style="position:fixed;bottom:0;left:0;right:0;text-align:center;padding:5px;font-size:10px;color:#1a3a4a;background:linear-gradient(transparent,#0a1018);pointer-events:none;z-index:10;">▼ Consultá las recomendaciones de equipamiento abajo ▼</div>
 </div><!-- /#planner -->
-
-<!-- ══ CONSULTORÍA ══ -->
-<div id="consult-section">
-  <div id="consult-header">
-    <span class="ct-label">Consultoría</span>
-    <span class="ct-sub">— Recomendaciones de equipamiento, estrategia y ROI según tu espacio</span>
-    <button class="ct-analyze" onclick="runConsult()">↻ Actualizar</button>
-  </div>
-  <div id="consult-body">
-    <div id="consult-inner"></div>
-  </div>
-</div>
 
 <!-- ══ MODAL ADD / EDIT ══ -->
 <div id="modal-overlay" onclick="closeModal()">
@@ -373,6 +313,7 @@ var PRESETS = {
 //  STATE
 // ══════════════════════════════════════════════════
 var SCALE=64, MARGIN=34, ROOM_W=10, ROOM_H=9, SNAP=0.5;
+var ROOM_SHAPE='rect', CUT_W=3, CUT_H=3, CUT_CORNER='tr';
 var placed=[], nextUid=1, selectedUid=null, drag=null, viewMode='top';
 var canvas=document.getElementById('floor-canvas'), ctx=canvas.getContext('2d');
 
@@ -384,15 +325,14 @@ initCanvas();
 // ══════════════════════════════════════════════════
 var STORAGE_KEY='inca_gym_planner_v1';
 var PROJECTS={}, activeProjectId=null, projectCounter=1;
-var CUOTA=25000, FILL=70;
 
 function newProject(name){
-  return { name:name, roomW:10, roomH:9, placed:[], nextUid:1, eq:defaultEQ(), exch:1450, cuota:25000, fill:70 };
+  return { name:name, roomW:10, roomH:9, placed:[], nextUid:1, exch:1450, shape:'rect', cutW:3, cutH:3, cutCorner:'tr' };
 }
 
 function saveToStorage(){
   try{
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ projects:PROJECTS, active:activeProjectId, counter:projectCounter }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ projects:PROJECTS, active:activeProjectId, counter:projectCounter, catalog:EQ }));
     flashSaveIndicator();
   }catch(err){ console.error('No se pudo guardar en localStorage', err); }
 }
@@ -406,32 +346,39 @@ function loadFromStorage(){
     PROJECTS=data.projects;
     activeProjectId=data.active&&PROJECTS[data.active]?data.active:Object.keys(PROJECTS)[0];
     projectCounter=data.counter||Object.keys(PROJECTS).length;
+    // El catálogo es global y compartido. Compatibilidad con guardados viejos que lo tenían por proyecto.
+    EQ=data.catalog||(PROJECTS[activeProjectId]&&PROJECTS[activeProjectId].eq)||defaultEQ();
     return true;
   }catch(err){ console.error('No se pudo leer localStorage', err); return false; }
 }
 
-// Vuelca el estado en memoria (vars de trabajo) hacia el proyecto activo y persiste
+// Vuelca el estado en memoria (vars de trabajo) hacia el proyecto activo y persiste.
+// El catálogo (EQ) es global: se guarda una sola vez para todos los proyectos, no por proyecto.
 function persistState(){
   if(!activeProjectId||!PROJECTS[activeProjectId]) return;
   var p=PROJECTS[activeProjectId];
   p.roomW=ROOM_W; p.roomH=ROOM_H;
-  p.placed=placed; p.nextUid=nextUid; p.eq=EQ;
+  p.placed=placed; p.nextUid=nextUid;
+  p.shape=ROOM_SHAPE; p.cutW=CUT_W; p.cutH=CUT_H; p.cutCorner=CUT_CORNER;
   var exchEl=document.getElementById('exch');
   p.exch=exchEl?(parseFloat(exchEl.value)||p.exch):p.exch;
-  p.cuota=CUOTA; p.fill=FILL;
   saveToStorage();
 }
 
-// Carga el proyecto activo hacia las vars de trabajo
+// Carga el proyecto activo hacia las vars de trabajo (EQ no se toca: es global)
 function loadActiveIntoVars(){
   var p=PROJECTS[activeProjectId];
   ROOM_W=p.roomW||10; ROOM_H=p.roomH||9;
   placed=p.placed||[]; nextUid=p.nextUid||1;
-  EQ=p.eq||defaultEQ();
-  CUOTA=p.cuota||25000; FILL=p.fill||70;
+  ROOM_SHAPE=p.shape||'rect'; CUT_W=p.cutW||3; CUT_H=p.cutH||3; CUT_CORNER=p.cutCorner||'tr';
   document.getElementById('room-w').value=ROOM_W;
   document.getElementById('room-h').value=ROOM_H;
   document.getElementById('exch').value=p.exch||1450;
+  document.getElementById('room-shape').value=ROOM_SHAPE;
+  document.getElementById('cut-corner').value=CUT_CORNER;
+  document.getElementById('cut-w').value=CUT_W;
+  document.getElementById('cut-h').value=CUT_H;
+  document.getElementById('l-shape-controls').style.display=ROOM_SHAPE==='l'?'flex':'none';
 }
 
 function switchProject(id){
@@ -445,7 +392,7 @@ function switchProject(id){
   buildCatalog();
   updateUI();
   render();
-  runConsult();
+  persistState();
   renderTabs();
   saveToStorage();
 }
@@ -466,7 +413,7 @@ function addProject(){
   buildCatalog();
   updateUI();
   render();
-  runConsult();
+  persistState();
   renderTabs();
   saveToStorage();
 }
@@ -500,7 +447,7 @@ function deleteProject(id,ev){
     buildCatalog();
     updateUI();
     render();
-    runConsult();
+    persistState();
   }
   renderTabs();
   saveToStorage();
@@ -547,6 +494,27 @@ function getUsedArea(){ return placed.reduce(function(s,it){ var e=getEq(it.eqId
 function hasId(id){ for(var i=0;i<placed.length;i++) if(placed[i].eqId===id) return true; return false; }
 function hasCat(c){ for(var i=0;i<placed.length;i++){ var e=getEq(placed[i].eqId); if(e&&e.cat===c) return true; } return false; }
 
+// ── Forma en L: el "recorte" es un rectángulo faltante en una esquina de la sala ──
+function getNotchRect(){
+  if(ROOM_SHAPE!=='l') return null;
+  var nx0,ny0;
+  if(CUT_CORNER==='tr'){ nx0=ROOM_W-CUT_W; ny0=0; }
+  else if(CUT_CORNER==='tl'){ nx0=0; ny0=0; }
+  else if(CUT_CORNER==='br'){ nx0=ROOM_W-CUT_W; ny0=ROOM_H-CUT_H; }
+  else { nx0=0; ny0=ROOM_H-CUT_H; } // bl
+  return { x:nx0, y:ny0, w:CUT_W, h:CUT_H };
+}
+function inNotch(x,y,w,h){
+  var n=getNotchRect();
+  if(!n) return false;
+  return !(x+w<=n.x||x>=n.x+n.w||y+h<=n.y||y>=n.y+n.h);
+}
+function getRoomArea(){
+  var a=ROOM_W*ROOM_H;
+  if(ROOM_SHAPE==='l') a-=CUT_W*CUT_H;
+  return Math.max(0,a);
+}
+
 // ══════════════════════════════════════════════════
 //  TOP-DOWN RENDER
 // ══════════════════════════════════════════════════
@@ -562,11 +530,24 @@ function drawTop(){
   for(i=0;i<=ROOM_W;i++){px=ox+i*SCALE;ctx.strokeStyle='#1a2e48';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(px,oy);ctx.lineTo(px,oy+ROOM_H*SCALE);ctx.stroke();if(i>0){ctx.fillStyle='#253a55';ctx.textAlign='center';ctx.fillText(i+'m',px,oy-8);}}
   for(i=0;i<=ROOM_H;i++){py=oy+i*SCALE;ctx.strokeStyle='#1a2e48';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(ox,py);ctx.lineTo(ox+ROOM_W*SCALE,py);ctx.stroke();if(i>0){ctx.fillStyle='#253a55';ctx.textAlign='right';ctx.fillText(i+'m',ox-6,py+3);}}
   ctx.strokeStyle='#3a5a80';ctx.lineWidth=2;ctx.strokeRect(ox,oy,ROOM_W*SCALE,ROOM_H*SCALE);
+  var notch=getNotchRect(),entranceBlocked=false;
+  if(notch){
+    var nX=ox+notch.x*SCALE,nY=oy+notch.y*SCALE,nW=notch.w*SCALE,nH=notch.h*SCALE;
+    ctx.fillStyle='#080f18';ctx.fillRect(nX,nY,nW,nH);
+    ctx.save();ctx.beginPath();ctx.rect(nX,nY,nW,nH);ctx.clip();
+    ctx.strokeStyle='#16202f';ctx.lineWidth=1;
+    for(var t=-nH;t<nW+nH;t+=10){ctx.beginPath();ctx.moveTo(nX+t,nY);ctx.lineTo(nX+t-nH,nY+nH);ctx.stroke();}
+    ctx.restore();
+    ctx.strokeStyle='#3a5a80';ctx.lineWidth=2;ctx.strokeRect(nX,nY,nW,nH);
+    entranceBlocked=notch.x<=0&&notch.y<(ROOM_H/2+0.75)&&(notch.y+notch.h)>(ROOM_H/2-0.75);
+  }
   var eL=1.5*SCALE,eY=oy+(ROOM_H*SCALE-eL)/2;
+  if(!entranceBlocked){
   ctx.fillStyle='#080f18';ctx.fillRect(ox-4,eY,8,eL);
   ctx.strokeStyle='#2ecc71';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(ox,eY);ctx.lineTo(ox,eY+eL);ctx.stroke();
   var aMY=eY+eL/2;ctx.fillStyle='#27ae60';ctx.beginPath();ctx.moveTo(ox+6,aMY);ctx.lineTo(ox+22,aMY-8);ctx.lineTo(ox+22,aMY+8);ctx.closePath();ctx.fill();
   ctx.fillStyle='#27ae60';ctx.font='bold 9px sans-serif';ctx.textAlign='center';ctx.save();ctx.translate(ox-15,oy+ROOM_H*SCALE/2);ctx.rotate(-Math.PI/2);ctx.fillText('BOX',0,0);ctx.restore();
+  }
   placed.forEach(function(it){ var e=getEq(it.eqId);if(!e||e.nonPhys)return;var iw=itemW(it),ih=itemH(it);ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fillRect(ox+it.x*SCALE+4,oy+it.y*SCALE+4,iw*SCALE,ih*SCALE); });
   placed.forEach(function(it){
     var e=getEq(it.eqId);if(!e||e.nonPhys)return;
@@ -623,7 +604,7 @@ function getXY(e){var r=canvas.getBoundingClientRect();return{cx:(e.clientX-r.le
 function c2r(cx,cy){return{rx:(cx-MARGIN)/SCALE,ry:(cy-MARGIN)/SCALE};}
 function hitTest(it,rx,ry){var e=getEq(it.eqId);if(!e||e.nonPhys)return false;var iw=itemW(it),ih=itemH(it);return rx>=it.x&&rx<=it.x+iw&&ry>=it.y&&ry<=it.y+ih;}
 canvas.addEventListener('mousedown',function(e){if(viewMode==='iso')return;var xy=getXY(e),rp=c2r(xy.cx,xy.cy),found=null;for(var i=placed.length-1;i>=0;i--){if(hitTest(placed[i],rp.rx,rp.ry)){found=placed[i];break;}}if(found){selectedUid=found.uid;drag={uid:found.uid,offX:rp.rx-found.x,offY:rp.ry-found.y};canvas.style.cursor='grabbing';}else selectedUid=null;updateUI();render();});
-canvas.addEventListener('mousemove',function(e){var xy=getXY(e),rp=c2r(xy.cx,xy.cy);if(drag){var it=getItem(drag.uid);if(!it)return;var iw=itemW(it),ih=itemH(it);it.x=clamp(snapV(rp.rx-drag.offX),0,ROOM_W-iw);it.y=clamp(snapV(rp.ry-drag.offY),0,ROOM_H-ih);updateAreaStat();render();return;}if(viewMode!=='iso'){var h=false;for(var i=0;i<placed.length;i++){if(hitTest(placed[i],rp.rx,rp.ry)){h=true;break;}}canvas.style.cursor=h?'grab':'default';}});
+canvas.addEventListener('mousemove',function(e){var xy=getXY(e),rp=c2r(xy.cx,xy.cy);if(drag){var it=getItem(drag.uid);if(!it)return;var iw=itemW(it),ih=itemH(it);var tx=clamp(snapV(rp.rx-drag.offX),0,ROOM_W-iw);var ty=clamp(snapV(rp.ry-drag.offY),0,ROOM_H-ih);if(!inNotch(tx,it.y,iw,ih))it.x=tx;if(!inNotch(it.x,ty,iw,ih))it.y=ty;updateAreaStat();render();return;}if(viewMode!=='iso'){var h=false;for(var i=0;i<placed.length;i++){if(hitTest(placed[i],rp.rx,rp.ry)){h=true;break;}}canvas.style.cursor=h?'grab':'default';}});
 canvas.addEventListener('mouseup',function(){if(drag)persistState();drag=null;if(canvas.style.cursor==='grabbing')canvas.style.cursor='default';});
 canvas.addEventListener('mouseleave',function(){if(drag)persistState();drag=null;});
 document.addEventListener('keydown',function(e){if(['INPUT','TEXTAREA','SELECT'].indexOf(e.target.tagName)>=0)return;if(e.key==='r'||e.key==='R')rotateSelected();if(e.key==='Delete'||e.key==='Backspace')deleteSelected();if(e.key==='Escape')closeModal();});
@@ -631,32 +612,58 @@ document.addEventListener('keydown',function(e){if(['INPUT','TEXTAREA','SELECT']
 // ══════════════════════════════════════════════════
 //  ACTIONS
 // ══════════════════════════════════════════════════
-function addItem(eqId){var e=getEq(eqId);if(!e)return;var x=0.5,y=0.5;if(!e.nonPhys){var iw=e.w,ih=e.h;outer:for(var ty=0;ty+ih<=ROOM_H;ty+=SNAP){for(var tx=0;tx+iw<=ROOM_W;tx+=SNAP){if(!overlapsAny(null,tx,ty,iw,ih)){x=tx;y=ty;break outer;}}}}var it={uid:nextUid++,eqId:eqId,x:x,y:y,rotated:false};placed.push(it);selectedUid=it.uid;updateUI();render();runConsult();}
-function overlapsAny(excl,x,y,w,h){for(var i=0;i<placed.length;i++){var it=placed[i];if(it.uid===excl)continue;var e=getEq(it.eqId);if(!e||e.nonPhys)continue;var iw=itemW(it),ih=itemH(it);if(!(x+w<=it.x||x>=it.x+iw||y+h<=it.y||y>=it.y+ih))return true;}return false;}
+function addItem(eqId){var e=getEq(eqId);if(!e)return;var x=0.5,y=0.5;if(!e.nonPhys){var iw=e.w,ih=e.h;outer:for(var ty=0;ty+ih<=ROOM_H;ty+=SNAP){for(var tx=0;tx+iw<=ROOM_W;tx+=SNAP){if(!overlapsAny(null,tx,ty,iw,ih)){x=tx;y=ty;break outer;}}}}var it={uid:nextUid++,eqId:eqId,x:x,y:y,rotated:false};placed.push(it);selectedUid=it.uid;updateUI();render();persistState();}
+function overlapsAny(excl,x,y,w,h){if(inNotch(x,y,w,h))return true;for(var i=0;i<placed.length;i++){var it=placed[i];if(it.uid===excl)continue;var e=getEq(it.eqId);if(!e||e.nonPhys)continue;var iw=itemW(it),ih=itemH(it);if(!(x+w<=it.x||x>=it.x+iw||y+h<=it.y||y>=it.y+ih))return true;}return false;}
 function rotateSelected(){if(!selectedUid)return;var it=getItem(selectedUid);if(!it)return;var e=getEq(it.eqId);if(!e||e.nonPhys)return;it.rotated=!it.rotated;it.x=clamp(it.x,0,ROOM_W-itemW(it));it.y=clamp(it.y,0,ROOM_H-itemH(it));render();persistState();}
-function deleteSelected(){if(!selectedUid)return;placed=placed.filter(function(p){return p.uid!==selectedUid;});selectedUid=null;updateUI();render();runConsult();}
-function clearAll(){if(placed.length>0&&!confirm('Limpiar todo el plano?'))return;placed=[];selectedUid=null;nextUid=1;updateUI();render();runConsult();}
-function removeItem(uid){placed=placed.filter(function(p){return p.uid!==uid;});if(selectedUid===uid)selectedUid=null;updateUI();render();runConsult();}
+function deleteSelected(){if(!selectedUid)return;placed=placed.filter(function(p){return p.uid!==selectedUid;});selectedUid=null;updateUI();render();persistState();}
+function clearAll(){if(placed.length>0&&!confirm('Limpiar todo el plano?'))return;placed=[];selectedUid=null;nextUid=1;updateUI();render();persistState();}
+function removeItem(uid){placed=placed.filter(function(p){return p.uid!==uid;});if(selectedUid===uid)selectedUid=null;updateUI();render();persistState();}
 function selectItem(uid){selectedUid=uid;updateUI();render();}
 function toggleView(){viewMode=viewMode==='top'?'iso':'top';document.getElementById('btn-iso').textContent=viewMode==='iso'?'▧ Vista Cenital':'◈ Vista 3D';if(viewMode==='iso'){canvas.style.cursor='default';drag=null;}render();}
 
 // ══════════════════════════════════════════════════
 //  ROOM DIMENSIONS
 // ══════════════════════════════════════════════════
+function updateRoomShape(){
+  var shape=document.getElementById('room-shape').value;
+  document.getElementById('l-shape-controls').style.display=shape==='l'?'flex':'none';
+  updateRoom();
+}
+
 function updateRoom(){
   var nw=parseFloat(document.getElementById('room-w').value)||10;
   var nh=parseFloat(document.getElementById('room-h').value)||9;
   ROOM_W=Math.round(clamp(nw,3,40)*2)/2;
   ROOM_H=Math.round(clamp(nh,3,40)*2)/2;
-  placed.forEach(function(it){var e=getEq(it.eqId);if(!e||e.nonPhys)return;it.x=clamp(it.x,0,ROOM_W-itemW(it));it.y=clamp(it.y,0,ROOM_H-itemH(it));});
-  initCanvas();updateAreaStat();render();runConsult();
+
+  ROOM_SHAPE=document.getElementById('room-shape').value;
+  if(ROOM_SHAPE==='l'){
+    CUT_CORNER=document.getElementById('cut-corner').value;
+    var ncw=parseFloat(document.getElementById('cut-w').value)||3;
+    var nch=parseFloat(document.getElementById('cut-h').value)||3;
+    CUT_W=Math.round(clamp(ncw,0.5,ROOM_W-1)*2)/2;
+    CUT_H=Math.round(clamp(nch,0.5,ROOM_H-1)*2)/2;
+    document.getElementById('cut-w').value=CUT_W;
+    document.getElementById('cut-h').value=CUT_H;
+  }
+
+  placed.forEach(function(it){
+    var e=getEq(it.eqId);if(!e||e.nonPhys)return;
+    it.x=clamp(it.x,0,ROOM_W-itemW(it));
+    it.y=clamp(it.y,0,ROOM_H-itemH(it));
+    if(inNotch(it.x,it.y,itemW(it),itemH(it))){
+      var iw=itemW(it),ih=itemH(it),moved=false;
+      outer3: for(var ty=0;ty+ih<=ROOM_H;ty+=SNAP){for(var tx=0;tx+iw<=ROOM_W;tx+=SNAP){if(!inNotch(tx,ty,iw,ih)){it.x=tx;it.y=ty;moved=true;break outer3;}}}
+    }
+  });
+  initCanvas();updateAreaStat();render();persistState();
 }
 
 // ══════════════════════════════════════════════════
 //  PRESETS & LAYOUT
 // ══════════════════════════════════════════════════
-function loadPreset(name){placed=[];selectedUid=null;nextUid=1;var ids=PRESETS[name]||[];var items=ids.map(function(id){var e=getEq(id);return e?{uid:nextUid++,eqId:id,x:0,y:0,rotated:false}:null;}).filter(Boolean);autoLayout(items);placed=items;updateUI();render();runConsult();}
-function autoLayout(items){var GAP=0.3,RGAP=0.5,cx=0.3,cy=0.3,rowH=0;items.forEach(function(it){var e=getEq(it.eqId);if(!e||e.nonPhys){it.x=0;it.y=0;return;}var iw=e.w,ih=e.h;if(cx+iw>ROOM_W-0.2){cx=0.3;cy=snapV(cy+rowH+RGAP);rowH=0;}if(cy+ih>ROOM_H-0.1){cx=snapV(ROOM_W*0.55);cy=0.3;rowH=0;}it.x=snapV(cx);it.y=snapV(cy);cx=snapV(cx+iw+GAP);rowH=Math.max(rowH,ih);});}
+function loadPreset(name){placed=[];selectedUid=null;nextUid=1;var ids=PRESETS[name]||[];var items=ids.map(function(id){var e=getEq(id);return e?{uid:nextUid++,eqId:id,x:0,y:0,rotated:false}:null;}).filter(Boolean);autoLayout(items);placed=items;updateUI();render();persistState();}
+function autoLayout(items){var GAP=0.3,RGAP=0.5,cx=0.3,cy=0.3,rowH=0;items.forEach(function(it){var e=getEq(it.eqId);if(!e||e.nonPhys){it.x=0;it.y=0;return;}var iw=e.w,ih=e.h;if(cx+iw>ROOM_W-0.2){cx=0.3;cy=snapV(cy+rowH+RGAP);rowH=0;}if(cy+ih>ROOM_H-0.1){cx=snapV(ROOM_W*0.55);cy=0.3;rowH=0;}var guard=0;while(inNotch(cx,cy,iw,ih)&&guard<200){cx=snapV(cx+iw+GAP);if(cx+iw>ROOM_W-0.2){cx=0.3;cy=snapV(cy+rowH+RGAP);rowH=0;}guard++;}it.x=snapV(cx);it.y=snapV(cy);cx=snapV(cx+iw+GAP);rowH=Math.max(rowH,ih);});}
 
 // ══════════════════════════════════════════════════
 //  UI
@@ -685,254 +692,20 @@ function updateUI(){
   var si=document.getElementById('sel-info');if(selectedUid){var it=getItem(selectedUid),e=it?getEq(it.eqId):null;si.textContent=e&&!e.nonPhys?e.name+'  '+itemW(it)+'x'+itemH(it)+'m':'';} else si.textContent='';
 }
 function updateBudget(){var t=getTotalUSD(),rate=Math.max(1,parseFloat(document.getElementById('exch').value)||1450);document.getElementById('total-usd').textContent='USD $'+fmt(t);document.getElementById('total-ars').textContent='ARS $'+fmt(t*rate);updateAreaStat();}
-function updateAreaStat(){var used=getUsedArea(),total=ROOM_W*ROOM_H;document.getElementById('used-area').textContent=used.toFixed(1);document.getElementById('free-area').textContent=Math.max(0,total-used).toFixed(1);document.getElementById('stat-total').textContent=total.toFixed(1);var sah=document.getElementById('sah-frac');if(sah)sah.textContent=used.toFixed(1)+' / '+total.toFixed(1)+' m²';}
+function updateAreaStat(){var used=getUsedArea(),total=getRoomArea();document.getElementById('used-area').textContent=used.toFixed(1);document.getElementById('free-area').textContent=Math.max(0,total-used).toFixed(1);document.getElementById('stat-total').textContent=total.toFixed(1);var sah=document.getElementById('sah-frac');if(sah)sah.textContent=used.toFixed(1)+' / '+total.toFixed(1)+' m²';}
 
 // ══════════════════════════════════════════════════
 //  MODAL
 // ══════════════════════════════════════════════════
 var _mMode=null,_mId=null;
 function openAddModal(){_mMode='add';_mId=null;document.getElementById('modal-title').textContent='Agregar equipamiento nuevo';document.getElementById('f-name').value='';document.getElementById('f-w').value='';document.getElementById('f-h').value='';document.getElementById('f-price').value='';document.getElementById('f-color').value='#4a90d9';document.getElementById('f-nonphys').checked=false;document.getElementById('f-dims-row').style.opacity='1';document.getElementById('f-dims-row').style.pointerEvents='';document.getElementById('modal-del-btn').style.display='none';document.getElementById('modal-submit').textContent='Agregar';populateCatSelect(null);document.getElementById('modal-overlay').style.display='flex';setTimeout(function(){document.getElementById('f-name').focus();},50);}
-function openEditModal(eqId){var e=getEq(eqId);if(!e)return;_mMode='edit';_mId=eqId;document.getElementById('modal-title').textContent='Editar: '+e.name;document.getElementById('f-name').value=e.name;document.getElementById('f-w').value=e.nonPhys?'':e.w;document.getElementById('f-h').value=e.nonPhys?'':e.h;document.getElementById('f-price').value=e.price;document.getElementById('f-color').value=e.color;document.getElementById('f-nonphys').checked=!!e.nonPhys;document.getElementById('f-dims-row').style.opacity=e.nonPhys?'0.3':'1';document.getElementById('f-dims-row').style.pointerEvents=e.nonPhys?'none':'';document.getElementById('f-newcat').value='';document.getElementById('modal-del-btn').style.display=eqId.indexOf('custom_')===0?'block':'none';document.getElementById('modal-submit').textContent='Guardar cambios';populateCatSelect(e.cat);document.getElementById('modal-overlay').style.display='flex';}
+function openEditModal(eqId){var e=getEq(eqId);if(!e)return;_mMode='edit';_mId=eqId;document.getElementById('modal-title').textContent='Editar: '+e.name;document.getElementById('f-name').value=e.name;document.getElementById('f-w').value=e.nonPhys?'':e.w;document.getElementById('f-h').value=e.nonPhys?'':e.h;document.getElementById('f-price').value=e.price;document.getElementById('f-color').value=e.color;document.getElementById('f-nonphys').checked=!!e.nonPhys;document.getElementById('f-dims-row').style.opacity=e.nonPhys?'0.3':'1';document.getElementById('f-dims-row').style.pointerEvents=e.nonPhys?'none':'';document.getElementById('f-newcat').value='';document.getElementById('modal-del-btn').style.display='block';document.getElementById('modal-submit').textContent='Guardar cambios';populateCatSelect(e.cat);document.getElementById('modal-overlay').style.display='flex';}
 function populateCatSelect(sel){var cats={};EQ.forEach(function(e){cats[e.cat]=true;});var s=document.getElementById('f-cat');s.innerHTML=Object.keys(cats).map(function(c){return'<option value="'+c+'"'+(c===sel?' selected':'')+'>'+c+'</option>';}).join('');document.getElementById('f-newcat').value='';}
 function toggleNonPhys(){var ch=document.getElementById('f-nonphys').checked;document.getElementById('f-dims-row').style.opacity=ch?'0.3':'1';document.getElementById('f-dims-row').style.pointerEvents=ch?'none':'';}
 function closeModal(){document.getElementById('modal-overlay').style.display='none';}
-function submitModal(){var name=document.getElementById('f-name').value.trim(),catNew=document.getElementById('f-newcat').value.trim(),catSel=document.getElementById('f-cat').value,cat=catNew||catSel,nonPhys=document.getElementById('f-nonphys').checked,w=nonPhys?0:parseFloat(document.getElementById('f-w').value)||0,h=nonPhys?0:parseFloat(document.getElementById('f-h').value)||0,price=parseInt(document.getElementById('f-price').value)||0,color=document.getElementById('f-color').value;if(!name){alert('El nombre es obligatorio.');return;}if(!cat){alert('Elegí o creá una categoría.');return;}if(!nonPhys&&(w<=0||h<=0)){alert('Ingresá dimensiones válidas.');return;}if(_mMode==='add'){EQ.push({id:'custom_'+Date.now(),name:name,w:w,h:h,price:price,color:color,cat:cat,nonPhys:nonPhys||undefined});}else{for(var i=0;i<EQ.length;i++){if(EQ[i].id===_mId){EQ[i].name=name;EQ[i].w=w;EQ[i].h=h;EQ[i].price=price;EQ[i].color=color;EQ[i].cat=cat;EQ[i].nonPhys=nonPhys||undefined;break;}}}closeModal();buildCatalog();updateUI();render();runConsult();}
+function submitModal(){var name=document.getElementById('f-name').value.trim(),catNew=document.getElementById('f-newcat').value.trim(),catSel=document.getElementById('f-cat').value,cat=catNew||catSel,nonPhys=document.getElementById('f-nonphys').checked,w=nonPhys?0:parseFloat(document.getElementById('f-w').value)||0,h=nonPhys?0:parseFloat(document.getElementById('f-h').value)||0,price=parseInt(document.getElementById('f-price').value)||0,color=document.getElementById('f-color').value;if(!name){alert('El nombre es obligatorio.');return;}if(!cat){alert('Elegí o creá una categoría.');return;}if(!nonPhys&&(w<=0||h<=0)){alert('Ingresá dimensiones válidas.');return;}if(_mMode==='add'){EQ.push({id:'custom_'+Date.now(),name:name,w:w,h:h,price:price,color:color,cat:cat,nonPhys:nonPhys||undefined});}else{for(var i=0;i<EQ.length;i++){if(EQ[i].id===_mId){EQ[i].name=name;EQ[i].w=w;EQ[i].h=h;EQ[i].price=price;EQ[i].color=color;EQ[i].cat=cat;EQ[i].nonPhys=nonPhys||undefined;break;}}}closeModal();buildCatalog();updateUI();render();persistState();}
 function deleteEqFromModal(){if(!_mId)return;if(!confirm('Eliminar este equipamiento del catálogo?'))return;EQ=EQ.filter(function(e){return e.id!==_mId;});placed=placed.filter(function(p){return p.eqId!==_mId;});if(selectedUid){var si=getItem(selectedUid);if(!si)selectedUid=null;}closeModal();buildCatalog();updateUI();render();persistState();}
 
-// ══════════════════════════════════════════════════
-//  CONSULTING PANEL
-// ══════════════════════════════════════════════════
-
-function rec(cls,badge,name,price,why,who){
-  return '<div class="c-rec '+cls+'">'+
-    '<span class="c-rec-badge '+badge+'">'+badgeLabel(cls)+'</span>'+
-    '<div class="c-rec-body">'+
-      '<div class="c-rec-name">'+name+'</div>'+
-      (price?'<div class="c-rec-price">~USD $'+price.toLocaleString()+'</div>':'')+
-      '<div class="c-rec-why">'+why+'</div>'+
-      (who?'<div class="c-rec-who">👥 '+who+'</div>':'')+
-    '</div></div>';
-}
-function badgeLabel(cls){
-  if(cls==='pri-1') return 'ESENCIAL';
-  if(cls==='pri-2') return 'RECOMENDADO';
-  if(cls==='pri-3') return 'COMPLEMENTARIO';
-  return 'DIFERENCIADOR';
-}
-
-function runConsult(){
-  var area=ROOM_W*ROOM_H;
-  var used=getUsedArea();
-  var totalUSD=getTotalUSD();
-  var rate=Math.max(1,parseFloat(document.getElementById('exch').value)||1450);
-
-  // ROI inputs — leídos de los inputs si existen (usuario los tocó), si no de la variable de proyecto
-  var cuotaEl=document.getElementById('cuota-input');
-  var fillEl=document.getElementById('fill-rate');
-  if(cuotaEl) CUOTA=parseFloat(cuotaEl.value)||CUOTA;
-  if(fillEl) FILL=parseFloat(fillEl.value)||FILL;
-  var cuota=CUOTA, fill=FILL;
-
-  // Capacity: 1 socio/m² (industry standard for enrollment)
-  var capacidad=Math.round(area*1);
-  var sociosEsperados=Math.round(capacidad*(fill/100));
-  var ingresoMensual=sociosEsperados*cuota;
-  var inversionARS=totalUSD*rate;
-  var roiMeses=ingresoMensual>0?Math.round(inversionARS/ingresoMensual):null;
-
-  // Occupation check
-  var ratioOcup=area>0?used/area:0;
-  var ocupMsg='';
-  if(ratioOcup>0.55) ocupMsg='<div class="c-warn-bar risk"><b>Sobreocupación ('+Math.round(ratioOcup*100)+'%):</b> El equipamiento ocupa demasiado espacio. Los pasillos mínimos son 1.2m entre máquinas. Revisá la distribución.</div>';
-  else if(ratioOcup>0.42) ocupMsg='<div class="c-warn-bar warn"><b>Ocupación elevada ('+Math.round(ratioOcup*100)+'%):</b> Margen ajustado. Verificá que los pasillos entre máquinas sean de al menos 1.0m.</div>';
-  else if(placed.length>0) ocupMsg='<div class="c-warn-bar ok"><b>Distribución espacial correcta ('+Math.round(ratioOcup*100)+'%):</b> Buen balance entre equipamiento y circulación.</div>';
-
-  // ── ETAPA INTERMEDIA ──────────────────────────
-  var interH='';
-
-  // Rack mancuernas — siempre esencial
-  interH+=rec('pri-1','badge-1','Rack de Mancuernas (2.5–50kg)',3000,
-    'El corazón de cualquier sala de musculación. El 80% de los ejercicios de brazo, hombro y espalda lo requieren. Con un rack completo hasta 50kg cobrás el rango de trabajo del 95% de tus socios. Sin rack no hay musculación libre real. Alta rotación en hora pico: es el equipo más usado por sesión.',
-    'Todos los niveles · máxima rotación en hora pico');
-
-  // Polea funcional — siempre esencial
-  interH+=rec('pri-1','badge-1','Polea Funcional',1200,
-    'La herramienta más versátil por m² del gym. Con una sola polea se pueden realizar 50+ ejercicios: jalones, remos, poleas cruzadas, trabajo de core, extensiones de tríceps, curl de bíceps, y más. Alto rendimiento por inversión y espacio. Imprescindible para trabajar espalda de forma guiada.',
-    'Todos los niveles · uso transversal en todos los entrenamientos');
-
-  // Smith Machine
-  interH+=rec('pri-1','badge-1','Smith Machine',1800,
-    'Permite sentadilla, press de banca, press militar, hip thrust y lunges de forma segura sin necesitar un ayudante. Para principiantes e intermedios reemplaza el rack olímpico. En salas sin mucho personal de supervisión, reduce el riesgo de lesiones y aumenta la confianza del socio para entrenar solo.',
-    'Principiantes e intermedios · trabajo sin spotter');
-
-  // Prensa 45° — solo si el espacio lo permite
-  if(area>=35){
-    interH+=rec('pri-1','badge-1','Prensa de Piernas 45°',3000,
-      'La máquina más solicitada por socios adultos (30+ años). El trabajo de piernas guiado es el principal factor de retención en gyms de musculación. Los socios que no pueden hacer sentadilla libre (rodillas, espalda) NECESITAN la prensa para entrenar piernas. Su ausencia genera cancelaciones directas de membresía.',
-      'Todos los niveles · especialmente socios 30+ · alta retención');
-  } else {
-    interH+=rec('pri-2','badge-2','Prensa de Piernas 45° (según espacio disponible)',3000,
-      'Muy demandada pero ocupa 2×2m. Para sala de '+area+'m² evaluá si el layout lo permite antes de priorizarla. Si no entra, una extensión/curl + hack squat compacto puede ser alternativa.',
-      'Alta demanda · revisar disponibilidad de espacio');
-  }
-
-  // Extensión/Curl
-  interH+=rec('pri-1','badge-1','Máq. Extensión/Curl Combinada',2000,
-    'Completa el trabajo de piernas junto a la prensa. Extensión cuádriceps + curl femoral en una sola máquina. Sin este par de ejercicios el entrenamiento de piernas queda incompleto. Una sola máquina, dos funciones fundamentales. Muy alta demanda post-prensa.',
-    'Todos los niveles · siempre en uso luego de la prensa');
-
-  // Pec deck
-  interH+=rec('pri-1','badge-1','Pec Deck / Mariposa',1500,
-    'Una de las máquinas más solicitadas en cualquier gym. El aislamiento de pecho es altamente demandado tanto por hombres (por volumen) como por mujeres (por tono). Complementa al Smith Machine para press y permite trabajar el pecho sin necesidad de barra. Impacto directo en satisfacción del socio.',
-    'Todos los niveles · alta demanda masculina y femenina');
-
-  // Hip Thrust
-  interH+=rec('pri-1','badge-1','Hip Thrust Bench',1200,
-    'En los últimos 5 años se volvió el ejercicio de glúteos más demandado científicamente y en redes sociales. Alta demanda femenina (entre el 70-80% de las socias lo buscan específicamente). Diferenciador frente a la competencia que no lo tiene. Fácil de usar, seguro, y con alto impacto en motivación y resultados visibles.',
-    'Alta demanda femenina · diferenciador vs. competencia');
-
-  // Bancos
-  interH+=rec('pri-1','badge-1','Bancos (2 regulables + 1 plano)',580,
-    'Sin bancos el rack de mancuernas, la polea y la mayoría de las máquinas no se pueden usar correctamente. Los bancos regulables permiten trabajar en todos los ángulos (inclinado, plano, declinado). Necesitás mínimo 2 regulables para evitar cuellos de botella en hora pico.',
-    'Uso en el 80% de los ejercicios con mancuernas y polea');
-
-  // Banco Scott
-  interH+=rec('pri-2','badge-2','Banco Scott',300,
-    'Aislamiento perfecto de bíceps. Muy demandado por socios que quieren crecimiento específico de brazo. Bajo costo, poco espacio. Complementa el rack de mancuernas y es de las primeras cosas que buscan socios intermedios al ingresar a la sala.',
-    'Socios intermedios · bajo costo-beneficio excelente');
-
-  // Barras + discos
-  interH+=rec('pri-2','badge-2','Rack Barras Olímpicas + Set de Discos',800,
-    'Necesario para usar con la Smith Machine y para ejercicios de barra libre básicos. Un set básico incluye barra olímpica + discos de 5, 10, 15, 20 y 25kg. El rack ordenador evita accidentes y mantiene la sala ordenada.',
-    'Complemento obligado de Smith Machine y trabajo con barra');
-
-  // Espejos
-  interH+=rec('pri-1','badge-1','Espejos (mínimo 2 tramos, 1 pared)',1800,
-    'Imprescindibles para la autocorrección técnica. Los socios que no ven su postura no aprenden bien y tienen mayor riesgo de lesión. Además, los espejos amplían visualmente el espacio y son un elemento clave en la percepción de calidad de la sala. Una sala sin espejos se percibe como de menor nivel, independientemente del equipamiento.',
-    'Impacto directo en percepción de calidad y seguridad');
-
-  // Iluminación
-  interH+=rec('pri-2','badge-2','Iluminación LED específica para gym',600,
-    'La iluminación de la sala de musculación debe ser diferente a la del box de CrossFit. Temperatura de color fría-neutra (5000-6000K), sin sombras duras sobre las máquinas. Una buena iluminación aumenta la energía percibida, mejora las fotos (aspecto importante para los socios) y da una imagen más profesional.',
-    'Inversión baja · impacto alto en percepción de calidad');
-
-  // Budget intermedia
-  var budgetI=3000+1200+1800+3000+2000+1500+1200+580+300+800+1800+600;
-
-  // ── ETAPA PREMIUM ──────────────────────────
-  var premH='';
-
-  // Hack Squat
-  premH+=rec('pri-1','badge-1','Hack Squat / V-Squat',4000,
-    'Complementa y a veces reemplaza la prensa para socios avanzados. Trabaja el cuádricep desde un ángulo completamente diferente a la prensa 45°, evitando la adaptación muscular. Para socios que llevan 6+ meses entrenando piernas, este equipo renueva su progreso y motivación. Es un diferenciador fuerte frente a gyms de gama media.',
-    'Socios avanzados · usuarios con 6+ meses de entrenamiento');
-
-  // Cable Crossover
-  premH+=rec('pri-1','badge-1','Cable Crossover Premium (doble polea)',5000,
-    'El upgrade definitivo respecto a la polea simple. La doble polea independiente permite movimientos cruzados, trabajo unilateral y ejercicios imposibles con una sola polea. En la industria fitness se lo conoce como el "Rolls Royce" del trabajo funcional. Muy valorado por socios avanzados y es el primer equipo que buscan usuarios que vengan de otros gyms premium.',
-    'Socios avanzados · usuarios que vienen de gyms premium');
-
-  // Máquina glúteos
-  premH+=rec('pri-1','badge-1','Máquina de Glúteos (Hip Abductor/Glute)',3500,
-    'Alta demanda femenina y uno de los equipos más fotografiados en redes sociales. Si tu target incluye mujeres jóvenes (18-35 años), esta máquina es casi obligatoria en la etapa premium. Diferenciador fuerte: muchos gyms de musculación todavía no la tienen. Genera contenido orgánico cuando las socias la publican en Instagram.',
-    'Alta demanda femenina 18-35 años · generador de contenido RRSS');
-
-  // Remo guiado
-  premH+=rec('pri-2','badge-2','Remo Guiado / Seated Row Machine',2500,
-    'Complementa la polea para trabajo de espalda con mayor estabilidad y mayor carga posible. Permite aislar mejor el dorsal y los romboides. Socios avanzados que quieren construir espalda ancha lo buscan específicamente. Junto al cable crossover, cierra el espectro completo de trabajo de espalda.',
-    'Socios que priorizan desarrollo de espalda');
-
-  // Curl femoral sentado
-  premH+=rec('pri-2','badge-2','Curl Femoral Sentado',2000,
-    'Complementa la extensión/curl combo. El curl femoral sentado activa diferente porción del bíceps femoral respecto al curl acostado. Para socios avanzados es fundamental para un desarrollo completo de femoral posterior. Baja frecuencia de uso comparado con prensa, pero muy valorado por quienes lo buscan.',
-    'Socios avanzados · completar zona femoral');
-
-  // Rack ext 70kg
-  if(area>=60){
-    premH+=rec('pri-2','badge-2','Extensión Rack 50–70kg',3000,
-      'Para socios avanzados que ya superaron los 50kg con mancuernas (nivel alto). Si tu población tiene muchos socios de 2+ años de experiencia, este rack los retiene. Sin él, los usuarios avanzados se van a gyms con más peso disponible.',
-      'Socios avanzados 2+ años · alta fidelización');
-  }
-
-  // Smith premium
-  premH+=rec('pri-3','badge-3','Upgrade Smith Machine a versión Premium',3000,
-    'El Smith Machine premium incluye guía de cable por poleas (movimiento más suave), topes de seguridad ajustables, mayor capacidad de carga (hasta 300kg), y gancho de apertura en múltiples ángulos. Si tu público objetivo valora la calidad percibida del equipamiento, este upgrade mejora la experiencia de uso notablemente.',
-    'Percepción de calidad · socios exigentes');
-
-  // Espejos full
-  premH+=rec('pri-3','badge-3','Espejos full 3 paredes',3500,
-    'Con 3 paredes espejadas la sala se percibe el doble de grande y el nivel visual sube notablemente. Es lo que diferencia visualmente una sala premium de una intermedia. Impacto directo en la primera impresión de nuevos socios y en la retención. Las fotos de la sala se vuelven mucho más atractivas para redes sociales.',
-    'Primera impresión · retención · contenido para RRSS');
-
-  // Señalética
-  premH+=rec('pri-3','badge-3','Señalética y Branding INCA',1000,
-    'La identidad visual de INCA en la sala de musculación es clave para diferenciar el espacio del box de CrossFit y reforzar la percepción de que son dos productos distintos con valor propio. Vinilo con logo, colores corporativos, normas de uso en las máquinas. El branding interno aumenta el ticket promedio y la percepción de valor.',
-    'Identidad de marca · diferenciación interna CrossFit vs. Musculación');
-
-  var budgetP=budgetI+4000+5000+3500+2500+2000+3000+3000+3500+1000;
-
-  // ── ROI CALCULATOR ──────────────────────────
-  var roiSection='<div style="margin-top:12px;padding:10px 12px;background:#0d1825;border:1px solid #1e3050;border-radius:6px;">'+
-    '<div style="font-size:11px;font-weight:700;color:#9b59b6;margin-bottom:8px;">📊 Calculador de ROI</div>'+
-    '<div style="font-size:9px;color:#2a5a6a;margin-bottom:8px;line-height:1.5;">Basado en estándar de industria: 1 socio por m² de sala (capacidad de inscripción). '+
-    'Para una sala de '+fmt(area,1)+'m² = '+capacidad+' socios de capacidad máxima.</div>'+
-    '<div class="c-roi-inputs">'+
-      '<div class="c-roi-group"><label>Cuota diferencial musculación (ARS/mes)</label>'+
-        '<input type="number" id="cuota-input" value="'+cuota+'" min="1000" step="1000" onchange="runConsult()"></div>'+
-      '<div class="c-roi-group"><label>Tasa de ocupación esperada (%)</label>'+
-        '<input type="number" id="fill-rate" value="'+fill+'" min="10" max="100" step="5" onchange="runConsult()"></div>'+
-      '<div class="c-roi-note">La tasa de ocupación es el % de capacidad que realmente se llena. Promedio industria argentina: 55–70%.</div>'+
-    '</div>';
-
-  if(totalUSD>0&&ingresoMensual>0){
-    var roiColor=roiMeses<=18?'#2ecc71':roiMeses<=30?'#f39c12':'#e74c3c';
-    roiSection+=
-      '<div class="c-roi-result">'+
-        '<div class="c-roi-stat"><div class="c-roi-stat-val" style="color:#3498db">'+fmt(sociosEsperados)+'</div><div class="c-roi-stat-lab">socios estimados</div></div>'+
-        '<div class="c-roi-stat"><div class="c-roi-stat-val" style="color:#27ae60">$'+fmtK(ingresoMensual)+'</div><div class="c-roi-stat-lab">ingreso mensual bruto</div></div>'+
-        '<div class="c-roi-stat"><div class="c-roi-stat-val" style="color:#e67e22">$'+fmtK(inversionARS)+'</div><div class="c-roi-stat-lab">inversión en ARS</div></div>'+
-        '<div class="c-roi-stat"><div class="c-roi-stat-val" style="color:'+roiColor+'">~'+roiMeses+' m</div><div class="c-roi-stat-lab">meses para recuperar</div></div>'+
-      '</div>'+
-      '<div class="c-roi-note2">'+
-        '⚠ El ingreso mensual es solo el diferencial de musculación (socios nuevos o socios que pagan membresía combinada). '+
-        'No incluye costos operativos, personal ni amortización de obra. El ROI real puede variar según la curva de adopción. '+
-        'Con una ocupación del '+fill+'% el punto de equilibrio se alcanza en aproximadamente '+roiMeses+' meses — '+
-        (roiMeses<=18?'excelente retorno para este tipo de inversión.':roiMeses<=30?'retorno aceptable dentro del promedio de la industria.':'revisar si el diferencial de cuota justifica la inversión o si conviene escalar por etapas.')+
-      '</div>';
-  } else if(totalUSD===0){
-    roiSection+='<div class="c-roi-note2">Cargá equipamiento en el plano o configurá una opción para calcular el ROI.</div>';
-  } else {
-    roiSection+='<div class="c-roi-note2">Configurá la cuota y la tasa de ocupación para calcular el retorno.</div>';
-  }
-  roiSection+='</div>';
-
-  // ── ARMAR HTML FINAL ──────────────────────────
-  var sumBar=
-    '<div class="c-sumbar" style="margin-bottom:18px;">'+
-      '<div class="c-sumcell"><div class="c-sum-val">'+fmt(area,1)+'m²</div><div class="c-sum-lab">Superficie sala</div></div>'+
-      '<div class="c-sumcell"><div class="c-sum-val">'+capacidad+'</div><div class="c-sum-lab">Capacidad (1 socio/m²)</div></div>'+
-      '<div class="c-sumcell"><div class="c-sum-val">'+(totalUSD?'USD $'+fmt(totalUSD):'—')+'</div><div class="c-sum-lab">Inversión plano actual</div></div>'+
-      '<div class="c-sumcell"><div class="c-sum-val">'+(roiMeses?roiMeses+' meses':'—')+'</div><div class="c-sum-lab">ROI estimado</div></div>'+
-    '</div>';
-
-  var html=sumBar+ocupMsg+
-    '<div class="c-stages-grid">'+
-      '<div class="c-stage c-stage-i">'+
-        '<div class="c-stage-hdr">⚡ Etapa Intermedia <span class="s-budget">~USD $'+fmt(budgetI)+'</span></div>'+
-        interH+
-      '</div>'+
-      '<div class="c-stage c-stage-p">'+
-        '<div class="c-stage-hdr">★ Etapa Premium <span class="s-budget">~USD $'+fmt(budgetP)+' acum.</span></div>'+
-        premH+
-      '</div>'+
-    '</div>'+
-    roiSection;
-
-  document.getElementById('consult-inner').innerHTML=html;
-  persistState();
-}
-
-function fmtK(n){if(n>=1000000)return'$'+fmt(n/1000000,1)+'M';if(n>=1000)return'$'+fmt(n/1000,0)+'K';return'$'+fmt(n);}
 
 // ══════════════════════════════════════════════════
 //  BOOT
@@ -948,15 +721,9 @@ initCanvas();
 buildCatalog();
 updateUI();
 render();
-runConsult();
+persistState();
 renderTabs();
 saveToStorage();
-
-// Ocultar scroll hint al hacer scroll
-window.addEventListener('scroll',function(){
-  var h=document.getElementById('scroll-hint');
-  if(h) h.style.display=window.scrollY>30?'none':'block';
-});
 </script>
 </body>
 </html>
