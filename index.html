@@ -18,12 +18,18 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1520; color: 
 .room-dims { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #567; }
 .room-dims input { background: #182840; border: 1px solid #2a4a6a; color: #aac; padding: 2px 5px; border-radius: 3px; width: 46px; font-size: 11px; text-align: center; }
 .room-dims input:focus { outline: none; border-color: #4a8abf; }
-.room-dims select { background: #182840; border: 1px solid #2a4a6a; color: #aac; padding: 2px 5px; border-radius: 3px; font-size: 11px; }
-.room-dims select:focus { outline: none; border-color: #4a8abf; }
-#l-shape-controls { display: none; align-items: center; gap: 4px; }
 
 /* ── TABS BAR ── */
 #tabs-bar { background: #0d1725; padding: 5px 14px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid #1a2740; flex-shrink: 0; overflow-x: auto; }
+#room-tabs-bar { background: #0a1420; padding: 4px 14px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid #16233a; flex-shrink: 0; overflow-x: auto; }
+.room-tabs-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #3a5a7a; flex-shrink: 0; margin-right: 2px; }
+.room-tab-item { display: flex; align-items: center; gap: 5px; background: #101c30; border: 1px solid #1e3050; border-radius: 4px; padding: 3px 8px; font-size: 10.5px; color: #6a8; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: background 0.12s; }
+.room-tab-item:hover { background: #16243c; color: #adc; }
+.room-tab-item.active { background: #1a4a3a; color: #7ecfb0; border-color: #2a8a5a; font-weight: 700; }
+.room-tab-item .tab-x { background: none; border: none; color: inherit; opacity: 0.6; cursor: pointer; font-size: 11px; padding: 0 1px; line-height: 1; }
+.room-tab-item .tab-x:hover { opacity: 1; color: #fff; }
+.room-tab-add { background: none; border: 1px dashed #22405a; color: #4a6a5a; border-radius: 4px; padding: 3px 8px; font-size: 10.5px; cursor: pointer; flex-shrink: 0; }
+.room-tab-add:hover { background: #101c30; color: #8dc; border-color: #2a8a5a; }
 .tab-item { display: flex; align-items: center; gap: 6px; background: #142238; border: 1px solid #22385a; border-radius: 5px 5px 0 0; padding: 5px 10px; font-size: 11px; color: #789; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: background 0.12s; }
 .tab-item:hover { background: #1a3050; color: #bcd; }
 .tab-item.active { background: #EB5B25; color: #fff; border-color: #EB5B25; font-weight: 700; }
@@ -96,6 +102,9 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1520; color: 
 .sel-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .sel-name { flex: 1; font-size: 10.5px; color: #ccc; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sel-area { font-size: 9px; color: #7ecfff; white-space: nowrap; }
+.sel-buf { background: none; border: 1px solid #2a4a5a; color: #3a6a7a; border-radius: 3px; font-size: 8px; font-weight: 700; width: 18px; height: 15px; cursor: pointer; padding: 0; flex-shrink: 0; line-height: 1; }
+.sel-buf:hover { border-color: #4a8a9a; color: #7dc; }
+.sel-buf.on { background: #EB5B25; border-color: #EB5B25; color: #fff; }
 .sel-p { font-size: 9px; color: #4a8; white-space: nowrap; }
 .sel-x { background: none; border: none; color: #445; cursor: pointer; font-size: 13px; padding: 0 1px; line-height: 1; flex-shrink: 0; }
 .sel-x:hover { color: #e74c3c; }
@@ -110,6 +119,17 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1520; color: 
 .exch-row label { font-size: 9px; color: #446; }
 .exch-row input { background: #182840; border: 1px solid #2a4a6a; color: #aac; padding: 3px 6px; border-radius: 3px; width: 65px; font-size: 11px; }
 #area-stat { font-size: 9px; color: #335; line-height: 1.5; border-top: 1px solid #1a2a3a; padding-top: 6px; margin-top: 5px; }
+#project-totals { border-top: 1px solid #1e2e4a; padding: 8px 10px; background: #0a1018; flex-shrink: 0; max-height: 140px; overflow-y: auto; }
+.pt-header { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #567; margin-bottom: 5px; }
+.pt-rows { display: flex; flex-direction: column; gap: 2px; }
+.pt-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 9.5px; color: #789; gap: 6px; padding: 2px 0; }
+.pt-row.pt-active .pt-name { color: #EB5B25; font-weight: 700; }
+.pt-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pt-area { color: #6a8fae; white-space: nowrap; }
+.pt-usd { color: #4a8; white-space: nowrap; }
+.pt-row.pt-grand { border-top: 1px solid #1e3050; margin-top: 4px; padding-top: 5px; font-size: 10.5px; }
+.pt-row.pt-grand .pt-name { color: #fff; font-weight: 700; }
+.pt-row.pt-grand .pt-usd { color: #2ecc71; font-weight: 700; }
 #sel-info { font-size: 10px; color: #3a6; margin-top: 3px; min-height: 14px; }
 
 /* ── MODAL ── */
@@ -154,22 +174,6 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1520; color: 
     ×
     <input type="number" id="room-h" value="9"  min="3" max="40" step="0.5" onchange="updateRoom()">
     m
-    <select id="room-shape" onchange="updateRoomShape()" title="Forma de la sala">
-      <option value="rect">Rectangular</option>
-      <option value="l">En L</option>
-    </select>
-    <span id="l-shape-controls">
-      <select id="cut-corner" onchange="updateRoom()" title="Esquina que falta">
-        <option value="tr">falta arr-der</option>
-        <option value="tl">falta arr-izq</option>
-        <option value="br">falta abj-der</option>
-        <option value="bl">falta abj-izq</option>
-      </select>
-      <input type="number" id="cut-w" value="3" min="0.5" step="0.5" onchange="updateRoom()" title="Ancho del recorte">
-      ×
-      <input type="number" id="cut-h" value="3" min="0.5" step="0.5" onchange="updateRoom()" title="Alto del recorte">
-      m
-    </span>
   </div>
   <div class="sep"></div>
   <button class="btn btn-rot" id="hdr-rotate" onclick="rotateSelected()" disabled>↻ Rotar (R)</button>
@@ -181,6 +185,7 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1520; color: 
 
 <!-- ══ TABS DE PROYECTOS/SEDES ══ -->
 <div id="tabs-bar"></div>
+<div id="room-tabs-bar"></div>
 
 <!-- ══ MAIN ══ -->
 <div id="main">
@@ -227,6 +232,7 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0d1520; color: 
         Disponible: <span id="free-area">90.0</span>m²
       </div>
     </div>
+    <div id="project-totals"></div>
   </div>
 </div>
 </div><!-- /#planner -->
@@ -313,7 +319,6 @@ var PRESETS = {
 //  STATE
 // ══════════════════════════════════════════════════
 var SCALE=64, MARGIN=34, ROOM_W=10, ROOM_H=9, SNAP=0.5;
-var ROOM_SHAPE='rect', CUT_W=3, CUT_H=3, CUT_CORNER='tr';
 var placed=[], nextUid=1, selectedUid=null, drag=null, viewMode='top';
 var canvas=document.getElementById('floor-canvas'), ctx=canvas.getContext('2d');
 
@@ -326,8 +331,11 @@ initCanvas();
 var STORAGE_KEY='inca_gym_planner_v1';
 var PROJECTS={}, activeProjectId=null, projectCounter=1;
 
+function newRoom(name){
+  return { name:name, roomW:10, roomH:9, placed:[], nextUid:1 };
+}
 function newProject(name){
-  return { name:name, roomW:10, roomH:9, placed:[], nextUid:1, exch:1450, shape:'rect', cutW:3, cutH:3, cutCorner:'tr' };
+  return { name:name, rooms:[newRoom('Salón 1')], activeRoomIdx:0, exch:1450 };
 }
 
 function saveToStorage(){
@@ -348,53 +356,176 @@ function loadFromStorage(){
     projectCounter=data.counter||Object.keys(PROJECTS).length;
     // El catálogo es global y compartido. Compatibilidad con guardados viejos que lo tenían por proyecto.
     EQ=data.catalog||(PROJECTS[activeProjectId]&&PROJECTS[activeProjectId].eq)||defaultEQ();
+    // Compatibilidad con guardados viejos (un solo salón por proyecto, sin array "rooms")
+    Object.keys(PROJECTS).forEach(function(id){
+      var p=PROJECTS[id];
+      if(!p.rooms||!p.rooms.length){
+        p.rooms=[{ name:'Salón 1', roomW:p.roomW||10, roomH:p.roomH||9, placed:p.placed||[], nextUid:p.nextUid||1 }];
+        p.activeRoomIdx=0;
+      }
+    });
     return true;
   }catch(err){ console.error('No se pudo leer localStorage', err); return false; }
 }
 
-// Vuelca el estado en memoria (vars de trabajo) hacia el proyecto activo y persiste.
+// Vuelca el estado en memoria (vars de trabajo) hacia el salón activo del proyecto activo y persiste.
 // El catálogo (EQ) es global: se guarda una sola vez para todos los proyectos, no por proyecto.
 function persistState(){
   if(!activeProjectId||!PROJECTS[activeProjectId]) return;
   var p=PROJECTS[activeProjectId];
-  p.roomW=ROOM_W; p.roomH=ROOM_H;
-  p.placed=placed; p.nextUid=nextUid;
-  p.shape=ROOM_SHAPE; p.cutW=CUT_W; p.cutH=CUT_H; p.cutCorner=CUT_CORNER;
+  if(!p.rooms||!p.rooms.length) return;
+  var r=p.rooms[p.activeRoomIdx]||p.rooms[0];
+  r.roomW=ROOM_W; r.roomH=ROOM_H;
+  r.placed=placed; r.nextUid=nextUid;
   var exchEl=document.getElementById('exch');
   p.exch=exchEl?(parseFloat(exchEl.value)||p.exch):p.exch;
   saveToStorage();
+  updateProjectTotals();
 }
 
-// Carga el proyecto activo hacia las vars de trabajo (EQ no se toca: es global)
+// Carga el salón activo del proyecto activo hacia las vars de trabajo (EQ no se toca: es global)
 function loadActiveIntoVars(){
   var p=PROJECTS[activeProjectId];
-  ROOM_W=p.roomW||10; ROOM_H=p.roomH||9;
-  placed=p.placed||[]; nextUid=p.nextUid||1;
-  ROOM_SHAPE=p.shape||'rect'; CUT_W=p.cutW||3; CUT_H=p.cutH||3; CUT_CORNER=p.cutCorner||'tr';
+  if(!p.rooms||!p.rooms.length){ p.rooms=[newRoom('Salón 1')]; p.activeRoomIdx=0; }
+  if(p.activeRoomIdx==null||!p.rooms[p.activeRoomIdx]) p.activeRoomIdx=0;
+  var r=p.rooms[p.activeRoomIdx];
+  ROOM_W=r.roomW||10; ROOM_H=r.roomH||9;
+  placed=r.placed||[]; nextUid=r.nextUid||1;
   document.getElementById('room-w').value=ROOM_W;
   document.getElementById('room-h').value=ROOM_H;
   document.getElementById('exch').value=p.exch||1450;
-  document.getElementById('room-shape').value=ROOM_SHAPE;
-  document.getElementById('cut-corner').value=CUT_CORNER;
-  document.getElementById('cut-w').value=CUT_W;
-  document.getElementById('cut-h').value=CUT_H;
-  document.getElementById('l-shape-controls').style.display=ROOM_SHAPE==='l'?'flex':'none';
+}
+
+function _resetSelectionState(){
+  selectedUid=null; drag=null; viewMode='top';
+  document.getElementById('btn-iso').textContent='◈ Vista 3D';
+}
+
+// ── Salones dentro del proyecto activo ──
+function switchRoom(idx){
+  var p=PROJECTS[activeProjectId];
+  if(idx===p.activeRoomIdx) return;
+  persistState();
+  p.activeRoomIdx=idx;
+  _resetSelectionState();
+  loadActiveIntoVars();
+  initCanvas();
+  updateUI();
+  render();
+  renderRoomTabs();
+  persistState();
+}
+
+function addRoom(){
+  var p=PROJECTS[activeProjectId];
+  var n=p.rooms.length+1;
+  var name=prompt('Nombre del nuevo salón:','Salón '+n);
+  if(name===null) return;
+  name=name.trim()||('Salón '+n);
+  persistState();
+  p.rooms.push(newRoom(name));
+  p.activeRoomIdx=p.rooms.length-1;
+  _resetSelectionState();
+  loadActiveIntoVars();
+  initCanvas();
+  updateUI();
+  render();
+  renderRoomTabs();
+  persistState();
+}
+
+function renameRoom(idx,ev){
+  if(ev)ev.stopPropagation();
+  var p=PROJECTS[activeProjectId];
+  var r=p.rooms[idx];
+  if(!r)return;
+  var name=prompt('Nuevo nombre para "'+r.name+'":',r.name);
+  if(name===null)return;
+  name=name.trim();
+  if(!name)return;
+  r.name=name;
+  renderRoomTabs();
+  saveToStorage();
+  updateProjectTotals();
+}
+
+function deleteRoom(idx,ev){
+  if(ev)ev.stopPropagation();
+  var p=PROJECTS[activeProjectId];
+  if(p.rooms.length<=1){ alert('No podés eliminar el único salón del proyecto. Creá otro antes de borrar este.'); return; }
+  if(!confirm('Eliminar el salón "'+p.rooms[idx].name+'"? Esta acción no se puede deshacer.'))return;
+  p.rooms.splice(idx,1);
+  if(idx===p.activeRoomIdx) p.activeRoomIdx=Math.min(idx,p.rooms.length-1);
+  else if(idx<p.activeRoomIdx) p.activeRoomIdx--;
+  _resetSelectionState();
+  loadActiveIntoVars();
+  initCanvas();
+  updateUI();
+  render();
+  renderRoomTabs();
+  persistState();
+}
+
+function renderRoomTabs(){
+  var bar=document.getElementById('room-tabs-bar');
+  if(!bar)return;
+  var p=PROJECTS[activeProjectId];
+  if(!p||!p.rooms){ bar.innerHTML=''; return; }
+  var html='<span class="room-tabs-label">Salones:</span>';
+  p.rooms.forEach(function(r,idx){
+    var active=idx===p.activeRoomIdx?' active':'';
+    html+='<div class="room-tab-item'+active+'" onclick="switchRoom('+idx+')" ondblclick="renameRoom('+idx+',event)" title="Doble clic para renombrar">'+
+      '<span>'+r.name+'</span>'+
+      '<button class="tab-x" onclick="deleteRoom('+idx+',event)" title="Eliminar salón">✕</button>'+
+    '</div>';
+  });
+  html+='<button class="room-tab-add" onclick="addRoom()" title="Nuevo salón en este proyecto">+ Salón</button>';
+  bar.innerHTML=html;
+}
+
+// ── Totales del proyecto (suma de todos los salones) ──
+function updateProjectTotals(){
+  var box=document.getElementById('project-totals');
+  if(!box)return;
+  var p=PROJECTS[activeProjectId];
+  if(!p||!p.rooms){ box.innerHTML=''; return; }
+  // sincronizar el salón activo con las vars de trabajo por si aún no se persistió
+  var active=p.rooms[p.activeRoomIdx];
+  if(active){ active.roomW=ROOM_W; active.roomH=ROOM_H; active.placed=placed; }
+
+  var rowsHtml='', totalArea=0, totalUsed=0, totalUSD=0;
+  p.rooms.forEach(function(r,idx){
+    var area=(r.roomW||0)*(r.roomH||0);
+    var used=(r.placed||[]).reduce(function(s,it){
+      var e=getEq(it.eqId); if(!e||e.nonPhys) return s;
+      var bw=(it.rotated?e.h:e.w)+(it.buffer?0.5:0);
+      var bh=(it.rotated?e.w:e.h)+(it.buffer?0.5:0);
+      return s+bw*bh;
+    },0);
+    var usd=(r.placed||[]).reduce(function(s,it){var e=getEq(it.eqId);return s+(e?e.price:0);},0);
+    totalArea+=area; totalUsed+=used; totalUSD+=usd;
+    var isActive=idx===p.activeRoomIdx;
+    rowsHtml+='<div class="pt-row'+(isActive?' pt-active':'')+'"><span class="pt-name">'+r.name+'</span><span class="pt-area">'+used.toFixed(1)+' / '+area.toFixed(1)+' m²</span><span class="pt-usd">USD $'+fmt(usd)+'</span></div>';
+  });
+  var html='<div class="pt-header">Totales del proyecto ('+p.rooms.length+' salón'+(p.rooms.length>1?'es':'')+')</div>'+
+    '<div class="pt-rows">'+rowsHtml+'</div>'+
+    '<div class="pt-row pt-grand"><span class="pt-name">TOTAL</span><span class="pt-area">'+totalUsed.toFixed(1)+' / '+totalArea.toFixed(1)+' m²</span><span class="pt-usd">USD $'+fmt(totalUSD)+'</span></div>';
+  box.innerHTML=html;
 }
 
 function switchProject(id){
   if(id===activeProjectId) return;
   persistState();
   activeProjectId=id;
-  selectedUid=null; drag=null; viewMode='top';
-  document.getElementById('btn-iso').textContent='◈ Vista 3D';
+  _resetSelectionState();
   loadActiveIntoVars();
   initCanvas();
   buildCatalog();
   updateUI();
   render();
-  persistState();
   renderTabs();
-  saveToStorage();
+  renderRoomTabs();
+  persistState();
 }
 
 function addProject(){
@@ -406,16 +537,15 @@ function addProject(){
   persistState();
   PROJECTS[id]=newProject(name);
   activeProjectId=id;
-  selectedUid=null; drag=null; viewMode='top';
-  document.getElementById('btn-iso').textContent='◈ Vista 3D';
+  _resetSelectionState();
   loadActiveIntoVars();
   initCanvas();
   buildCatalog();
   updateUI();
   render();
-  persistState();
   renderTabs();
-  saveToStorage();
+  renderRoomTabs();
+  persistState();
 }
 
 function renameProject(id,ev){
@@ -440,17 +570,16 @@ function deleteProject(id,ev){
   delete PROJECTS[id];
   if(id===activeProjectId){
     activeProjectId=Object.keys(PROJECTS)[0];
-    selectedUid=null; drag=null; viewMode='top';
-    document.getElementById('btn-iso').textContent='◈ Vista 3D';
+    _resetSelectionState();
     loadActiveIntoVars();
     initCanvas();
     buildCatalog();
     updateUI();
     render();
-    persistState();
+    renderRoomTabs();
   }
   renderTabs();
-  saveToStorage();
+  persistState();
 }
 
 function renderTabs(){
@@ -483,8 +612,11 @@ function flashSaveIndicator(){
 // ══════════════════════════════════════════════════
 function getEq(id){ for(var i=0;i<EQ.length;i++) if(EQ[i].id===id) return EQ[i]; return null; }
 function getItem(u){ for(var i=0;i<placed.length;i++) if(placed[i].uid===u) return placed[i]; return null; }
-function itemW(it){ var e=getEq(it.eqId); return it.rotated?e.h:e.w; }
-function itemH(it){ var e=getEq(it.eqId); return it.rotated?e.w:e.h; }
+var BUFFER_M=0.5;
+function baseItemW(it){ var e=getEq(it.eqId); return it.rotated?e.h:e.w; }
+function baseItemH(it){ var e=getEq(it.eqId); return it.rotated?e.w:e.h; }
+function itemW(it){ return baseItemW(it)+(it.buffer?BUFFER_M:0); }
+function itemH(it){ return baseItemH(it)+(it.buffer?BUFFER_M:0); }
 function snapV(v){ return Math.round(v/SNAP)*SNAP; }
 function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
 function fmt(n,d){ return n.toLocaleString('es-AR',{maximumFractionDigits:d||0}); }
@@ -494,26 +626,6 @@ function getUsedArea(){ return placed.reduce(function(s,it){ var e=getEq(it.eqId
 function hasId(id){ for(var i=0;i<placed.length;i++) if(placed[i].eqId===id) return true; return false; }
 function hasCat(c){ for(var i=0;i<placed.length;i++){ var e=getEq(placed[i].eqId); if(e&&e.cat===c) return true; } return false; }
 
-// ── Forma en L: el "recorte" es un rectángulo faltante en una esquina de la sala ──
-function getNotchRect(){
-  if(ROOM_SHAPE!=='l') return null;
-  var nx0,ny0;
-  if(CUT_CORNER==='tr'){ nx0=ROOM_W-CUT_W; ny0=0; }
-  else if(CUT_CORNER==='tl'){ nx0=0; ny0=0; }
-  else if(CUT_CORNER==='br'){ nx0=ROOM_W-CUT_W; ny0=ROOM_H-CUT_H; }
-  else { nx0=0; ny0=ROOM_H-CUT_H; } // bl
-  return { x:nx0, y:ny0, w:CUT_W, h:CUT_H };
-}
-function inNotch(x,y,w,h){
-  var n=getNotchRect();
-  if(!n) return false;
-  return !(x+w<=n.x||x>=n.x+n.w||y+h<=n.y||y>=n.y+n.h);
-}
-function getRoomArea(){
-  var a=ROOM_W*ROOM_H;
-  if(ROOM_SHAPE==='l') a-=CUT_W*CUT_H;
-  return Math.max(0,a);
-}
 
 // ══════════════════════════════════════════════════
 //  TOP-DOWN RENDER
@@ -530,38 +642,27 @@ function drawTop(){
   for(i=0;i<=ROOM_W;i++){px=ox+i*SCALE;ctx.strokeStyle='#1a2e48';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(px,oy);ctx.lineTo(px,oy+ROOM_H*SCALE);ctx.stroke();if(i>0){ctx.fillStyle='#253a55';ctx.textAlign='center';ctx.fillText(i+'m',px,oy-8);}}
   for(i=0;i<=ROOM_H;i++){py=oy+i*SCALE;ctx.strokeStyle='#1a2e48';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(ox,py);ctx.lineTo(ox+ROOM_W*SCALE,py);ctx.stroke();if(i>0){ctx.fillStyle='#253a55';ctx.textAlign='right';ctx.fillText(i+'m',ox-6,py+3);}}
   ctx.strokeStyle='#3a5a80';ctx.lineWidth=2;ctx.strokeRect(ox,oy,ROOM_W*SCALE,ROOM_H*SCALE);
-  var notch=getNotchRect(),entranceBlocked=false;
-  if(notch){
-    var nX=ox+notch.x*SCALE,nY=oy+notch.y*SCALE,nW=notch.w*SCALE,nH=notch.h*SCALE;
-    ctx.fillStyle='#080f18';ctx.fillRect(nX,nY,nW,nH);
-    ctx.save();ctx.beginPath();ctx.rect(nX,nY,nW,nH);ctx.clip();
-    ctx.strokeStyle='#16202f';ctx.lineWidth=1;
-    for(var t=-nH;t<nW+nH;t+=10){ctx.beginPath();ctx.moveTo(nX+t,nY);ctx.lineTo(nX+t-nH,nY+nH);ctx.stroke();}
-    ctx.restore();
-    ctx.strokeStyle='#3a5a80';ctx.lineWidth=2;ctx.strokeRect(nX,nY,nW,nH);
-    entranceBlocked=notch.x<=0&&notch.y<(ROOM_H/2+0.75)&&(notch.y+notch.h)>(ROOM_H/2-0.75);
-  }
   var eL=1.5*SCALE,eY=oy+(ROOM_H*SCALE-eL)/2;
-  if(!entranceBlocked){
   ctx.fillStyle='#080f18';ctx.fillRect(ox-4,eY,8,eL);
   ctx.strokeStyle='#2ecc71';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(ox,eY);ctx.lineTo(ox,eY+eL);ctx.stroke();
   var aMY=eY+eL/2;ctx.fillStyle='#27ae60';ctx.beginPath();ctx.moveTo(ox+6,aMY);ctx.lineTo(ox+22,aMY-8);ctx.lineTo(ox+22,aMY+8);ctx.closePath();ctx.fill();
   ctx.fillStyle='#27ae60';ctx.font='bold 9px sans-serif';ctx.textAlign='center';ctx.save();ctx.translate(ox-15,oy+ROOM_H*SCALE/2);ctx.rotate(-Math.PI/2);ctx.fillText('BOX',0,0);ctx.restore();
-  }
-  placed.forEach(function(it){ var e=getEq(it.eqId);if(!e||e.nonPhys)return;var iw=itemW(it),ih=itemH(it);ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fillRect(ox+it.x*SCALE+4,oy+it.y*SCALE+4,iw*SCALE,ih*SCALE); });
+  placed.forEach(function(it){ var e=getEq(it.eqId);if(!e||e.nonPhys)return;var bw=baseItemW(it),bh=baseItemH(it);var inset=it.buffer?BUFFER_M/2:0;ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fillRect(ox+(it.x+inset)*SCALE+4,oy+(it.y+inset)*SCALE+4,bw*SCALE,bh*SCALE); });
   placed.forEach(function(it){
     var e=getEq(it.eqId);if(!e||e.nonPhys)return;
     var iw=itemW(it),ih=itemH(it),px2=ox+it.x*SCALE,py2=oy+it.y*SCALE,pw=iw*SCALE,ph=ih*SCALE,isSel=it.uid===selectedUid;
-    ctx.fillStyle=e.color+(isSel?'ff':'dd');ctx.fillRect(px2,py2,pw,ph);
-    if(pw>24&&ph>24){ctx.strokeStyle='rgba(0,0,0,0.12)';ctx.lineWidth=1;for(var t=14;t<pw+ph;t+=14){ctx.beginPath();ctx.moveTo(px2+Math.min(t,pw),py2+Math.max(0,t-pw));ctx.lineTo(px2+Math.max(0,t-ph),py2+Math.min(t,ph));ctx.stroke();}}
+    var inset=it.buffer?BUFFER_M/2*SCALE:0,bx=px2+inset,by=py2+inset,bwpx=baseItemW(it)*SCALE,bhpx=baseItemH(it)*SCALE;
+    if(it.buffer){ctx.save();ctx.setLineDash([4,3]);ctx.strokeStyle=e.color+'99';ctx.lineWidth=1.3;ctx.strokeRect(px2+0.5,py2+0.5,pw-1,ph-1);ctx.restore();}
+    ctx.fillStyle=e.color+(isSel?'ff':'dd');ctx.fillRect(bx,by,bwpx,bhpx);
+    if(bwpx>24&&bhpx>24){ctx.strokeStyle='rgba(0,0,0,0.12)';ctx.lineWidth=1;for(var t=14;t<bwpx+bhpx;t+=14){ctx.beginPath();ctx.moveTo(bx+Math.min(t,bwpx),by+Math.max(0,t-bwpx));ctx.lineTo(bx+Math.max(0,t-bhpx),by+Math.min(t,bhpx));ctx.stroke();}}
     var rgb=hexToRgb(e.color),br2=Math.min(255,Math.round(rgb.r*1.4)),bg2=Math.min(255,Math.round(rgb.g*1.4)),bb2=Math.min(255,Math.round(rgb.b*1.4));
-    ctx.strokeStyle=isSel?'#fff':'rgb('+br2+','+bg2+','+bb2+')';ctx.lineWidth=isSel?2.5:1;ctx.strokeRect(px2,py2,pw,ph);
+    ctx.strokeStyle=isSel?'#fff':'rgb('+br2+','+bg2+','+bb2+')';ctx.lineWidth=isSel?2.5:1;ctx.strokeRect(bx,by,bwpx,bhpx);
     var bright=(rgb.r*299+rgb.g*587+rgb.b*114)/1000;
     ctx.fillStyle=bright>140?'rgba(0,0,0,0.85)':'rgba(255,255,255,0.95)';
-    var lines=wrapText(e.name,pw-8,11),lh=13,th=lines.length*lh,sy=py2+ph/2-th/2+10;
+    var lines=wrapText(e.name,bwpx-8,11),lh=13,th=lines.length*lh,sy=by+bhpx/2-th/2+10;
     ctx.font='11px sans-serif';ctx.textAlign='center';
-    lines.forEach(function(l,li){ctx.fillText(l,px2+pw/2,sy+li*lh);});
-    if(pw>55&&ph>24){ctx.fillStyle=bright>140?'rgba(0,0,0,0.45)':'rgba(255,255,255,0.45)';ctx.font='9px monospace';ctx.fillText(iw+'x'+ih+'m',px2+pw/2,py2+ph-4);}
+    lines.forEach(function(l,li){ctx.fillText(l,bx+bwpx/2,sy+li*lh);});
+    if(bwpx>55&&bhpx>24){ctx.fillStyle=bright>140?'rgba(0,0,0,0.45)':'rgba(255,255,255,0.45)';ctx.font='9px monospace';ctx.fillText(baseItemW(it)+'x'+baseItemH(it)+'m',bx+bwpx/2,by+bhpx-4);}
     if(isSel){ctx.strokeStyle='#fff';ctx.lineWidth=2;var cs=8;[[px2,py2,1,1],[px2+pw,py2,-1,1],[px2,py2+ph,1,-1],[px2+pw,py2+ph,-1,-1]].forEach(function(c){ctx.beginPath();ctx.moveTo(c[0]+c[2]*cs,c[1]);ctx.lineTo(c[0],c[1]);ctx.lineTo(c[0],c[1]+c[3]*cs);ctx.stroke();});}
   });
   ctx.fillStyle='#1a2e48';ctx.font='10px sans-serif';ctx.textAlign='center';ctx.fillText(ROOM_W+'m',ox+ROOM_W*SCALE/2,oy+ROOM_H*SCALE+22);ctx.save();ctx.translate(ox+ROOM_W*SCALE+22,oy+ROOM_H*SCALE/2);ctx.rotate(Math.PI/2);ctx.fillText(ROOM_H+'m',0,0);ctx.restore();
@@ -604,7 +705,7 @@ function getXY(e){var r=canvas.getBoundingClientRect();return{cx:(e.clientX-r.le
 function c2r(cx,cy){return{rx:(cx-MARGIN)/SCALE,ry:(cy-MARGIN)/SCALE};}
 function hitTest(it,rx,ry){var e=getEq(it.eqId);if(!e||e.nonPhys)return false;var iw=itemW(it),ih=itemH(it);return rx>=it.x&&rx<=it.x+iw&&ry>=it.y&&ry<=it.y+ih;}
 canvas.addEventListener('mousedown',function(e){if(viewMode==='iso')return;var xy=getXY(e),rp=c2r(xy.cx,xy.cy),found=null;for(var i=placed.length-1;i>=0;i--){if(hitTest(placed[i],rp.rx,rp.ry)){found=placed[i];break;}}if(found){selectedUid=found.uid;drag={uid:found.uid,offX:rp.rx-found.x,offY:rp.ry-found.y};canvas.style.cursor='grabbing';}else selectedUid=null;updateUI();render();});
-canvas.addEventListener('mousemove',function(e){var xy=getXY(e),rp=c2r(xy.cx,xy.cy);if(drag){var it=getItem(drag.uid);if(!it)return;var iw=itemW(it),ih=itemH(it);var tx=clamp(snapV(rp.rx-drag.offX),0,ROOM_W-iw);var ty=clamp(snapV(rp.ry-drag.offY),0,ROOM_H-ih);if(!inNotch(tx,it.y,iw,ih))it.x=tx;if(!inNotch(it.x,ty,iw,ih))it.y=ty;updateAreaStat();render();return;}if(viewMode!=='iso'){var h=false;for(var i=0;i<placed.length;i++){if(hitTest(placed[i],rp.rx,rp.ry)){h=true;break;}}canvas.style.cursor=h?'grab':'default';}});
+canvas.addEventListener('mousemove',function(e){var xy=getXY(e),rp=c2r(xy.cx,xy.cy);if(drag){var it=getItem(drag.uid);if(!it)return;var iw=itemW(it),ih=itemH(it);it.x=clamp(snapV(rp.rx-drag.offX),0,ROOM_W-iw);it.y=clamp(snapV(rp.ry-drag.offY),0,ROOM_H-ih);updateAreaStat();render();return;}if(viewMode!=='iso'){var h=false;for(var i=0;i<placed.length;i++){if(hitTest(placed[i],rp.rx,rp.ry)){h=true;break;}}canvas.style.cursor=h?'grab':'default';}});
 canvas.addEventListener('mouseup',function(){if(drag)persistState();drag=null;if(canvas.style.cursor==='grabbing')canvas.style.cursor='default';});
 canvas.addEventListener('mouseleave',function(){if(drag)persistState();drag=null;});
 document.addEventListener('keydown',function(e){if(['INPUT','TEXTAREA','SELECT'].indexOf(e.target.tagName)>=0)return;if(e.key==='r'||e.key==='R')rotateSelected();if(e.key==='Delete'||e.key==='Backspace')deleteSelected();if(e.key==='Escape')closeModal();});
@@ -612,9 +713,10 @@ document.addEventListener('keydown',function(e){if(['INPUT','TEXTAREA','SELECT']
 // ══════════════════════════════════════════════════
 //  ACTIONS
 // ══════════════════════════════════════════════════
-function addItem(eqId){var e=getEq(eqId);if(!e)return;var x=0.5,y=0.5;if(!e.nonPhys){var iw=e.w,ih=e.h;outer:for(var ty=0;ty+ih<=ROOM_H;ty+=SNAP){for(var tx=0;tx+iw<=ROOM_W;tx+=SNAP){if(!overlapsAny(null,tx,ty,iw,ih)){x=tx;y=ty;break outer;}}}}var it={uid:nextUid++,eqId:eqId,x:x,y:y,rotated:false};placed.push(it);selectedUid=it.uid;updateUI();render();persistState();}
-function overlapsAny(excl,x,y,w,h){if(inNotch(x,y,w,h))return true;for(var i=0;i<placed.length;i++){var it=placed[i];if(it.uid===excl)continue;var e=getEq(it.eqId);if(!e||e.nonPhys)continue;var iw=itemW(it),ih=itemH(it);if(!(x+w<=it.x||x>=it.x+iw||y+h<=it.y||y>=it.y+ih))return true;}return false;}
+function addItem(eqId){var e=getEq(eqId);if(!e)return;var x=0.5,y=0.5;if(!e.nonPhys){var iw=e.w,ih=e.h;outer:for(var ty=0;ty+ih<=ROOM_H;ty+=SNAP){for(var tx=0;tx+iw<=ROOM_W;tx+=SNAP){if(!overlapsAny(null,tx,ty,iw,ih)){x=tx;y=ty;break outer;}}}}var it={uid:nextUid++,eqId:eqId,x:x,y:y,rotated:false,buffer:false};placed.push(it);selectedUid=it.uid;updateUI();render();persistState();}
+function overlapsAny(excl,x,y,w,h){for(var i=0;i<placed.length;i++){var it=placed[i];if(it.uid===excl)continue;var e=getEq(it.eqId);if(!e||e.nonPhys)continue;var iw=itemW(it),ih=itemH(it);if(!(x+w<=it.x||x>=it.x+iw||y+h<=it.y||y>=it.y+ih))return true;}return false;}
 function rotateSelected(){if(!selectedUid)return;var it=getItem(selectedUid);if(!it)return;var e=getEq(it.eqId);if(!e||e.nonPhys)return;it.rotated=!it.rotated;it.x=clamp(it.x,0,ROOM_W-itemW(it));it.y=clamp(it.y,0,ROOM_H-itemH(it));render();persistState();}
+function toggleBuffer(uid){var it=getItem(uid);if(!it)return;var e=getEq(it.eqId);if(!e||e.nonPhys)return;it.buffer=!it.buffer;it.x=clamp(it.x,0,ROOM_W-itemW(it));it.y=clamp(it.y,0,ROOM_H-itemH(it));updateUI();render();persistState();}
 function deleteSelected(){if(!selectedUid)return;placed=placed.filter(function(p){return p.uid!==selectedUid;});selectedUid=null;updateUI();render();persistState();}
 function clearAll(){if(placed.length>0&&!confirm('Limpiar todo el plano?'))return;placed=[];selectedUid=null;nextUid=1;updateUI();render();persistState();}
 function removeItem(uid){placed=placed.filter(function(p){return p.uid!==uid;});if(selectedUid===uid)selectedUid=null;updateUI();render();persistState();}
@@ -624,46 +726,20 @@ function toggleView(){viewMode=viewMode==='top'?'iso':'top';document.getElementB
 // ══════════════════════════════════════════════════
 //  ROOM DIMENSIONS
 // ══════════════════════════════════════════════════
-function updateRoomShape(){
-  var shape=document.getElementById('room-shape').value;
-  document.getElementById('l-shape-controls').style.display=shape==='l'?'flex':'none';
-  updateRoom();
-}
-
 function updateRoom(){
   var nw=parseFloat(document.getElementById('room-w').value)||10;
   var nh=parseFloat(document.getElementById('room-h').value)||9;
   ROOM_W=Math.round(clamp(nw,3,40)*2)/2;
   ROOM_H=Math.round(clamp(nh,3,40)*2)/2;
-
-  ROOM_SHAPE=document.getElementById('room-shape').value;
-  if(ROOM_SHAPE==='l'){
-    CUT_CORNER=document.getElementById('cut-corner').value;
-    var ncw=parseFloat(document.getElementById('cut-w').value)||3;
-    var nch=parseFloat(document.getElementById('cut-h').value)||3;
-    CUT_W=Math.round(clamp(ncw,0.5,ROOM_W-1)*2)/2;
-    CUT_H=Math.round(clamp(nch,0.5,ROOM_H-1)*2)/2;
-    document.getElementById('cut-w').value=CUT_W;
-    document.getElementById('cut-h').value=CUT_H;
-  }
-
-  placed.forEach(function(it){
-    var e=getEq(it.eqId);if(!e||e.nonPhys)return;
-    it.x=clamp(it.x,0,ROOM_W-itemW(it));
-    it.y=clamp(it.y,0,ROOM_H-itemH(it));
-    if(inNotch(it.x,it.y,itemW(it),itemH(it))){
-      var iw=itemW(it),ih=itemH(it),moved=false;
-      outer3: for(var ty=0;ty+ih<=ROOM_H;ty+=SNAP){for(var tx=0;tx+iw<=ROOM_W;tx+=SNAP){if(!inNotch(tx,ty,iw,ih)){it.x=tx;it.y=ty;moved=true;break outer3;}}}
-    }
-  });
+  placed.forEach(function(it){var e=getEq(it.eqId);if(!e||e.nonPhys)return;it.x=clamp(it.x,0,ROOM_W-itemW(it));it.y=clamp(it.y,0,ROOM_H-itemH(it));});
   initCanvas();updateAreaStat();render();persistState();
 }
 
 // ══════════════════════════════════════════════════
 //  PRESETS & LAYOUT
 // ══════════════════════════════════════════════════
-function loadPreset(name){placed=[];selectedUid=null;nextUid=1;var ids=PRESETS[name]||[];var items=ids.map(function(id){var e=getEq(id);return e?{uid:nextUid++,eqId:id,x:0,y:0,rotated:false}:null;}).filter(Boolean);autoLayout(items);placed=items;updateUI();render();persistState();}
-function autoLayout(items){var GAP=0.3,RGAP=0.5,cx=0.3,cy=0.3,rowH=0;items.forEach(function(it){var e=getEq(it.eqId);if(!e||e.nonPhys){it.x=0;it.y=0;return;}var iw=e.w,ih=e.h;if(cx+iw>ROOM_W-0.2){cx=0.3;cy=snapV(cy+rowH+RGAP);rowH=0;}if(cy+ih>ROOM_H-0.1){cx=snapV(ROOM_W*0.55);cy=0.3;rowH=0;}var guard=0;while(inNotch(cx,cy,iw,ih)&&guard<200){cx=snapV(cx+iw+GAP);if(cx+iw>ROOM_W-0.2){cx=0.3;cy=snapV(cy+rowH+RGAP);rowH=0;}guard++;}it.x=snapV(cx);it.y=snapV(cy);cx=snapV(cx+iw+GAP);rowH=Math.max(rowH,ih);});}
+function loadPreset(name){placed=[];selectedUid=null;nextUid=1;var ids=PRESETS[name]||[];var items=ids.map(function(id){var e=getEq(id);return e?{uid:nextUid++,eqId:id,x:0,y:0,rotated:false,buffer:false}:null;}).filter(Boolean);autoLayout(items);placed=items;updateUI();render();persistState();}
+function autoLayout(items){var GAP=0.3,RGAP=0.5,cx=0.3,cy=0.3,rowH=0;items.forEach(function(it){var e=getEq(it.eqId);if(!e||e.nonPhys){it.x=0;it.y=0;return;}var iw=e.w,ih=e.h;if(cx+iw>ROOM_W-0.2){cx=0.3;cy=snapV(cy+rowH+RGAP);rowH=0;}if(cy+ih>ROOM_H-0.1){cx=snapV(ROOM_W*0.55);cy=0.3;rowH=0;}it.x=snapV(cx);it.y=snapV(cy);cx=snapV(cx+iw+GAP);rowH=Math.max(rowH,ih);});}
 
 // ══════════════════════════════════════════════════
 //  UI
@@ -683,7 +759,8 @@ function updateUI(){
       var areaItem=e.nonPhys?0:itemW(it)*itemH(it);
       running+=areaItem;
       var areaLabel=e.nonPhys?'—':areaItem.toFixed(2)+'m²';
-      html+='<div class="sel-item '+active+'" onclick="selectItem('+it.uid+')" title="Acumulado hasta aquí: '+running.toFixed(2)+'m²"><div class="sel-dot" style="background:'+e.color+'"></div><div class="sel-name" title="'+e.name+'">'+e.name+'</div><div class="sel-area">'+areaLabel+'</div><div class="sel-p">$'+e.price.toLocaleString()+'</div><button class="sel-x" onclick="event.stopPropagation();removeItem('+it.uid+')">x</button></div>';
+      var bufBtn=e.nonPhys?'':'<button class="sel-buf'+(it.buffer?' on':'')+'" onclick="event.stopPropagation();toggleBuffer('+it.uid+')" title="Zona de influencia: +'+BUFFER_M.toFixed(2)+'m por lado (espacio para discos, apoyar mancuernas, etc.)">ZI</button>';
+      html+='<div class="sel-item '+active+'" onclick="selectItem('+it.uid+')" title="Acumulado hasta aquí: '+running.toFixed(2)+'m²"><div class="sel-dot" style="background:'+e.color+'"></div><div class="sel-name" title="'+e.name+'">'+e.name+'</div>'+bufBtn+'<div class="sel-area">'+areaLabel+'</div><div class="sel-p">$'+e.price.toLocaleString()+'</div><button class="sel-x" onclick="event.stopPropagation();removeItem('+it.uid+')">x</button></div>';
     });
     selEl.innerHTML=html;
   }
@@ -692,7 +769,7 @@ function updateUI(){
   var si=document.getElementById('sel-info');if(selectedUid){var it=getItem(selectedUid),e=it?getEq(it.eqId):null;si.textContent=e&&!e.nonPhys?e.name+'  '+itemW(it)+'x'+itemH(it)+'m':'';} else si.textContent='';
 }
 function updateBudget(){var t=getTotalUSD(),rate=Math.max(1,parseFloat(document.getElementById('exch').value)||1450);document.getElementById('total-usd').textContent='USD $'+fmt(t);document.getElementById('total-ars').textContent='ARS $'+fmt(t*rate);updateAreaStat();}
-function updateAreaStat(){var used=getUsedArea(),total=getRoomArea();document.getElementById('used-area').textContent=used.toFixed(1);document.getElementById('free-area').textContent=Math.max(0,total-used).toFixed(1);document.getElementById('stat-total').textContent=total.toFixed(1);var sah=document.getElementById('sah-frac');if(sah)sah.textContent=used.toFixed(1)+' / '+total.toFixed(1)+' m²';}
+function updateAreaStat(){var used=getUsedArea(),total=ROOM_W*ROOM_H;document.getElementById('used-area').textContent=used.toFixed(1);document.getElementById('free-area').textContent=Math.max(0,total-used).toFixed(1);document.getElementById('stat-total').textContent=total.toFixed(1);var sah=document.getElementById('sah-frac');if(sah)sah.textContent=used.toFixed(1)+' / '+total.toFixed(1)+' m²';}
 
 // ══════════════════════════════════════════════════
 //  MODAL
@@ -721,9 +798,9 @@ initCanvas();
 buildCatalog();
 updateUI();
 render();
-persistState();
 renderTabs();
-saveToStorage();
+renderRoomTabs();
+persistState();
 </script>
 </body>
 </html>
